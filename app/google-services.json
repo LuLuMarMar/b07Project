@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "869215637705",
+    "firebase_url": "https://b07project-harld-default-rtdb.firebaseio.com",
+    "project_id": "b07project-harld",
+    "storage_bucket": "b07project-harld.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:869215637705:android:31e507ffa9ca225aa23d18",
+        "android_client_info": {
+          "package_name": "com.example.b07_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUPuK842Is7K64FDF47GNlN1EroVmnS3k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
