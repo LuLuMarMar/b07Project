@@ -39,7 +39,7 @@
                 android:layout_marginTop="29dp" />
 
             <EditText
-                android:id="@+id/editTextAgeForm"
+                android:id="@+id/editTextLimitForm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/datePickerForm"
@@ -52,10 +52,20 @@
                 android:id="@+id/btnSubmitForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/editTextAgeForm"
+                android:layout_below="@id/editTextLimitForm"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="16dp"
                 android:text="Submit"/>
+
+            <Button
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btnSubmitForm"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:text="Back"/>
+
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>

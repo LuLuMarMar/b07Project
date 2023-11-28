@@ -38,6 +38,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button btnViewFeedback = findViewById(R.id.btnViewFeedback);
+        btnViewFeedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Open FeedbackActivity when the button is clicked
+                Intent intent = new Intent(MainActivity.this, FeedbackActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
 }

@@ -1,0 +1,62 @@
+<!-- res/layout/activity_feedback.xml -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- ListView to display feedback -->
+    <ListView
+        android:id="@+id/listViewFeedback"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomPanel" />
+
+
+    <RelativeLayout
+        android:id="@+id/bottomPanel"
+        android:layout_width="310dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#CCCCCC"
+        android:clipToOutline="true"
+        android:outlineProvider="background"
+        android:padding="12dp"
+
+        android:layout_centerInParent="true">
+
+        <!-- Count of Reviews with modified font size -->
+        <TextView
+            android:id="@+id/tvReviewCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reviews: 0"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- Average Rating with modified font size -->
+        <TextView
+            android:id="@+id/tvAverageRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="70dp"
+            android:layout_toEndOf="@+id/tvReviewCount"
+            android:text="Avg Rating: 0.0"
+            android:textSize="18sp"
+            android:textStyle="bold"
+             />
+
+    </RelativeLayout>
+
+    <!-- Back Button below the panel -->
+        <Button
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bottomPanel"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Back"
+        android:background="#2196F3"
+            android:textColor="#FFFFFF" />
+
+    </RelativeLayout>
