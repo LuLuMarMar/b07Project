@@ -26,7 +26,7 @@ public class FeedbackActivity extends AppCompatActivity {
         setContentView(R.layout.activity_feedback);
 
         // Initialize Firebase Database reference
-        feedbackReference = FirebaseDatabase.getInstance().getReference("feedback");
+        feedbackReference = FirebaseDatabase.getInstance().getReference("feedbacks");
 
         // Initialize views
         listViewFeedback = findViewById(R.id.listViewFeedback);
