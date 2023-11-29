@@ -22,3 +22,13 @@ Done
 - Completed basic UI and list view code of User Story 10
 Planned
 - Modify the code of User Story 10 to receive complaints from Firebase
+
+RJ:
+Done
+- Finished implementing Firebase for User Story #6
+- Finished a prototype of User Story #5
+Planned
+- Add more cases to ensure proper inputs from users
+- Add better UI for User Story #5
+- Add the RSVP functionality for User Story #5
+- Maybe try to figure out how to make User Story #6 more "friendly"
