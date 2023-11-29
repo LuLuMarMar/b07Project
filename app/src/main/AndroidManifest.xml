@@ -24,10 +24,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".FeedbackFragment" />
+        <activity android:name=".EventActivity"/>
         <activity android:name=".FormActivity" />
         <activity android:name=".FeedbackActivity"/>
         <activity android:name=".ComplaintActivity" />
-
     </application>
 
 </manifest>
