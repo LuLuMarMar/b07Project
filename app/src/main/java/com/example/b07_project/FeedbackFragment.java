@@ -26,6 +26,7 @@ public class FeedbackFragment extends AppCompatActivity {
         addFeedbackToDB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String key = feedbackReference.push().getKey();
                 String comment = textInput.getText().toString();
                 int rating = ratingGroup.getCheckedRadioButtonId();
                 if(rating != -1) {
@@ -34,8 +35,8 @@ public class FeedbackFragment extends AppCompatActivity {
                 } else {
                     rating = 0;
                 }
-                Feedback feedback = new Feedback(comment, rating);
-                feedbackReference.child("name_of_event").setValue(feedback);
+                Feedback feedback = new Feedback(rating, comment, "name_of_event");
+                feedbackReference.child(key).setValue(feedback);
             }
         });
     }
