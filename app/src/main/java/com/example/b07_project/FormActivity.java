@@ -25,7 +25,7 @@ public class FormActivity extends AppCompatActivity {
         setContentView(R.layout.activity_form);
 
         // Initialize Firebase Database reference
-        databaseReference = FirebaseDatabase.getInstance().getReference("user_data");
+        databaseReference = FirebaseDatabase.getInstance().getReference("events");
 
         final EditText editTextNameForm = findViewById(R.id.editTextNameForm);
         final DatePicker datePickerForm = findViewById(R.id.datePickerForm);
@@ -46,6 +46,10 @@ public class FormActivity extends AppCompatActivity {
         btnSubmitForm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                FirebaseDatabase database = FirebaseDatabase.getInstance();
+//                DatabaseReference myRef = database.getReference("message");
+//
+//                myRef.setValue("Hello,ooo World!");
                 // Get values from the form
                 String name = editTextNameForm.getText().toString();
                 int day = datePickerForm.getDayOfMonth();
@@ -64,12 +68,8 @@ public class FormActivity extends AppCompatActivity {
                 UserData userData = new UserData(name, day, month, year,limit);
 
 
-
-                // Push data to Firebase Database
-                String userId = databaseReference.push().getKey();
-                if (userId != null) {
-                    databaseReference.child(userId).setValue(userData);
-                }
+                String key = databaseReference.push().getKey(); // Generate a unique key for the announcement
+                databaseReference.child(key).setValue(userData);
 
                 // Show a confirmation message
                 Toast.makeText(FormActivity.this, "Done!", Toast.LENGTH_SHORT).show();

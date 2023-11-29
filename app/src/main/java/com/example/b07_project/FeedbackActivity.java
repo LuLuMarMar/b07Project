@@ -1,7 +1,10 @@
 package com.example.b07_project;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -32,32 +35,32 @@ public class FeedbackActivity extends AppCompatActivity {
         listViewFeedback = findViewById(R.id.listViewFeedback);
         feedbackList = new ArrayList<>();
 
-        // Uncomment the following line when you have real-time data available
-        // displayFeedback();
-
-        // Display placeholder feedback initially
         displayFeedback();
+
+        Button btnBack = findViewById(R.id.btnBack);
+        btnBack.setBackgroundColor(Color.BLUE);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Finish the current activity and go back to the main page
+                finish();
+            }
+        });
     }
 
-    // Display feedback (either hardcoded placeholder or real-time from Firebase)
     private void displayFeedback() {
-        // Clear the previous feedback
-        feedbackList.clear();
 
-        // For now, use hardcoded placeholder data
-        feedbackList.add("Good feedback 1 (Rating: 4)");
-        feedbackList.add("Excellent feedback 2 (Rating: 5)");
-        feedbackList.add("Average feedback 3 (Rating: 3)");
 
-        // Uncomment the following lines when you have real-time data available
-        /*
         feedbackReference.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // Clear the previous feedback
+                feedbackList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String comment = snapshot.child("comment").getValue(String.class);
                     long rating = snapshot.child("rating").getValue(Long.class);
-                    String feedbackEntry = comment + " (Rating: " + rating + ")";
+                    String feedbackEntry = comment + " \nRating: " + rating + "/5";
                     feedbackList.add(feedbackEntry);
                 }
 
@@ -70,10 +73,9 @@ public class FeedbackActivity extends AppCompatActivity {
                 // Handle errors, if any
             }
         });
-        */
 
-        // Update the ListView and the bottom panel
-        updateFeedbackListView();
+
+
     }
 
     // Update the ListView with the current feedbackList
@@ -101,7 +103,7 @@ public class FeedbackActivity extends AppCompatActivity {
         float totalRating = 0;
 
         for (String feedbackEntry : feedbackList) {
-            int rating = Integer.parseInt(feedbackEntry.substring(feedbackEntry.lastIndexOf(":") + 2, feedbackEntry.lastIndexOf(")")));
+            int rating = Integer.parseInt(feedbackEntry.substring(feedbackEntry.lastIndexOf(":") + 2, feedbackEntry.lastIndexOf("/")));
             totalRating += rating;
         }
 
