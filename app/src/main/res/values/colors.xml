@@ -2,4 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="uoft_primary">#25355A</color>
+    <color name="uoft_secondary">#007FA3</color>
+    <color name="uoft_lightgrey">#F2F4F7</color>
 </resources>
