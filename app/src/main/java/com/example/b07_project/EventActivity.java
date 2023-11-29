@@ -39,7 +39,8 @@ public class EventActivity extends AppCompatActivity {
 
         Button btnBack = findViewById(R.id.btnBack);
         Button btnAddFeedback = findViewById(R.id.btnAddFeedback);
-        btnBack.setBackgroundColor(Color.BLUE);
+        btnBack.setBackgroundColor(Color.parseColor("#007FA3"));
+        btnAddFeedback.setBackgroundColor(Color.parseColor("#007FA3"));
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,5 +1,6 @@
 package com.example.b07_project;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +23,7 @@ public class FeedbackFragment extends AppCompatActivity {
         setContentView(R.layout.fragment_feedback);
         feedbackReference = FirebaseDatabase.getInstance().getReference("feedback");
         Button addFeedbackToDB = findViewById(R.id.feedback_button);
+        addFeedbackToDB.setBackgroundColor(Color.parseColor("#007FA3"));
         RadioGroup ratingGroup = findViewById(R.id.ratingGroup);
         TextInputEditText commentInput = findViewById(R.id.comment_text_input);
         EditText nameInput = findViewById(R.id.eventNameText);
