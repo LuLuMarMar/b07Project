@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
-
+  
     <Button
         android:id="@+id/btnViewEvents"
         android:layout_width="wrap_content"
@@ -12,4 +12,32 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:text="View Events"/>
+
+    <!-- Button to go to the form -->
+    <Button
+        android:id="@+id/btnGoToForm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Schedule Event"/>
+
+    <Button
+        android:id="@+id/btnViewFeedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnGoToForm"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="View Feedback"/>
+
+    <Button
+        android:id="@+id/btnComplaints"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnViewFeedback"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:onClick="navigateToComplaints"
+        android:text="Submit Complaints" />
 </RelativeLayout>
