@@ -69,7 +69,7 @@ public class EventActivity extends AppCompatActivity {
                     long day = snapshot.child("day").getValue(Long.class);
                     long month = snapshot.child("month").getValue(Long.class);
                     long year = snapshot.child("year").getValue(Long.class);
-                    String feedbackEntry = name + " on " + month + "/" + day + "/" + year;
+                    String feedbackEntry = "Event: " + name + "\nDate: " + month + "/" + day + "/" + year;
                     eventList.add(feedbackEntry);
                 }
 
