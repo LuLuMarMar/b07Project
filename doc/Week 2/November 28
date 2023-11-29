@@ -15,3 +15,10 @@ Done
 - Implementation of Login Module UI (User story 1) 
 Planned (TODO)
 - Troubleshoot login functionality and POSt page (User story 2)
+
+Helina:
+Done
+- Completed User Story 7 (connected to Firebase)
+- Completed basic UI and list view code of User Story 10
+Planned
+- Modify the code of User Story 10 to receive complaints from Firebase
