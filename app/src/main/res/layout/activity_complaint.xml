@@ -19,4 +19,13 @@
         android:layout_marginTop="16dp"
         android:text="Submit Complaint" />
 
+    <TextView
+        android:id="@+id/tvDisplayComplaints"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/submitComplaintButton"
+        android:layout_marginTop="16dp"
+        android:text=""
+        android:textSize="16sp" />
+
 </RelativeLayout>

@@ -1,60 +1,93 @@
 package com.example.b07_project;
 
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.b07_project.R;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.core.view.View;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 public class ComplaintActivity extends AppCompatActivity {
 
+    private DatabaseReference complaintsReference;
     private EditText complaintEditText;
-    private DatabaseReference complaintsRef;
+    private TextView tvDisplayComplaints;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complaint);
 
-        // Initialize UI components
-        complaintEditText = findViewById(R.id.complaintEditText);
+        // Initialize Firebase Database reference
+        complaintsReference = FirebaseDatabase.getInstance().getReference("complaints");
 
-        // Get a reference to the "complaints" node in the Firebase Realtime Database
-        complaintsRef = FirebaseDatabase.getInstance().getReference().child("complaints");
+        // Initialize views
+        complaintEditText = findViewById(R.id.complaintEditText);
+        tvDisplayComplaints = findViewById(R.id.tvDisplayComplaints);
+
+        // Set up the button click event
+        Button submitComplaintButton = findViewById(R.id.submitComplaintButton);
+        submitComplaintButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addUserComplaint();
+            }
+        });
+
+        // Display complaints from the database
+        displayComplaintsFromDatabase();
     }
 
-    // Method to submit a complaint
-    public void submitComplaint(View view) {
-        // Retrieve the text from the complaint input field
-        String complaintText = complaintEditText.getText().toString().trim();
+    // Display complaints from the database
+    private void displayComplaintsFromDatabase() {
+        complaintsReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                StringBuilder complaintsStringBuilder = new StringBuilder();
 
-        // Check if the complaint text is not empty
-        if (!TextUtils.isEmpty(complaintText)) {
-            // Generate a unique key for the complaint using push
-            String complaintId = complaintsRef.push().getKey();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String userComplaint = snapshot.child("comment").getValue(String.class);
+                    complaintsStringBuilder.append(userComplaint).append("\n");
+                }
 
-            // Set the complaint text under the generated key in the "complaints" node
-            complaintsRef.child(complaintId).setValue(complaintText);
+                // Update the TextView with complaints
+                tvDisplayComplaints.setText(complaintsStringBuilder.toString());
+            }
 
-            // Optionally, associate the complaint with the user who submitted it (assuming Firebase Authentication is used)
-            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            complaintsRef.child(complaintId).child("userId").setValue(userId);
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle errors, if any
+                Toast.makeText(ComplaintActivity.this, "Failed to load complaints.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
-            // Display a success message
-            Toast.makeText(this, "Complaint submitted successfully", Toast.LENGTH_SHORT).show();
+    // Add user complaint to the database
+    private void addUserComplaint() {
+        String userComplaint = complaintEditText.getText().toString().trim();
 
-            // Close the Complaints activity
-            finish();
+        if (!userComplaint.isEmpty()) {
+            // Push the user complaint to the database
+            String key = complaintsReference.push().getKey();
+            complaintsReference.child(key).child("comment").setValue(userComplaint);
+
+            // Clear the input field
+            complaintEditText.setText("");
+
+
+            // Inform the user that the complaint has been submitted
+            Toast.makeText(this, "Complaint submitted successfully", Toast.LENGTH_LONG).show();
         } else {
-            // Display an error message if the complaint text is empty
-            Toast.makeText(this, "Please enter a complaint", Toast.LENGTH_SHORT).show();
+            // Inform the user that the complaint cannot be empty
+            Toast.makeText(this, "Please enter your complaint", Toast.LENGTH_SHORT).show();
         }
     }
 }

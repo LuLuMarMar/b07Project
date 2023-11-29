@@ -49,15 +49,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button btnSubmitComplaints = findViewById(R.id.btnComplaints);
-        btnSubmitComplaints.setOnClickListener(new View.OnClickListener() {
+        Button btnComplaints = findViewById(R.id.btnComplaints);
+        btnComplaints.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Open FeedbackActivity when the button is clicked
+                // Open ComplaintActivity when the button is clicked
                 Intent intent = new Intent(MainActivity.this, ComplaintActivity.class);
                 startActivity(intent);
             }
         });
+
 
 
 
