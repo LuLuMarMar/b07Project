@@ -74,6 +74,10 @@ public class FormActivity extends AppCompatActivity {
                 // Show a confirmation message
                 Toast.makeText(FormActivity.this, "Done!", Toast.LENGTH_SHORT).show();
 
+                // Show a notification
+                NotificationHelper.showEventNotification(FormActivity.this, name);
+
+
                 // Finish the current activity and go back to the main page
                 finish();
             }

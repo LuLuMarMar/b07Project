@@ -49,6 +49,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button btnComplaints = findViewById(R.id.btnComplaints);
+        btnComplaints.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Open ComplaintActivity when the button is clicked
+                Intent intent = new Intent(MainActivity.this, ComplaintActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
+
     }
 
 }
+
