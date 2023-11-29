@@ -5,22 +5,11 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
-
-    <!-- Button to go to the form -->
     <Button
-        android:id="@+id/btnAddFeedback"
+        android:id="@+id/btnViewEvents"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:text="Add Feedback"/>
-
-    <Button
-        android:id="@+id/btnViewFeedback"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btnAddFeedback"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="View Feedback"/>
+        android:text="View Events"/>
 </RelativeLayout>

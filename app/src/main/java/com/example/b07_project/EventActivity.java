@@ -1,5 +1,6 @@
 package com.example.b07_project;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -37,12 +38,20 @@ public class EventActivity extends AppCompatActivity {
         displayFeedback();
 
         Button btnBack = findViewById(R.id.btnBack);
+        Button btnAddFeedback = findViewById(R.id.btnAddFeedback);
         btnBack.setBackgroundColor(Color.BLUE);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Finish the current activity and go back to the main page
                 finish();
+            }
+        });
+        btnAddFeedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EventActivity.this, FeedbackFragment.class);
+                startActivity(intent);
             }
         });
     }

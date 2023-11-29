@@ -42,14 +42,16 @@
         app:layout_constraintBottom_toTopOf="@+id/feedback_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ratingGroup"
+        app:layout_constraintTop_toBottomOf="@+id/eventNameText"
         app:layout_constraintVertical_bias="0.0">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/comment_text_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Feedback..."
+            android:fontFamily="@font/allerta"
+            android:gravity="center"
+            android:hint="Feedback"
             android:maxLines="17" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -158,5 +160,21 @@
             android:textStyle="bold" />
 
     </RadioGroup>
+
+    <EditText
+        android:id="@+id/eventNameText"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:hint="Event Name"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:fontFamily="@font/allerta"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ratingGroup" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

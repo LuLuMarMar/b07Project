@@ -3,6 +3,7 @@ package com.example.b07_project;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -22,12 +23,14 @@ public class FeedbackFragment extends AppCompatActivity {
         feedbackReference = FirebaseDatabase.getInstance().getReference("feedback");
         Button addFeedbackToDB = findViewById(R.id.feedback_button);
         RadioGroup ratingGroup = findViewById(R.id.ratingGroup);
-        TextInputEditText textInput = findViewById(R.id.comment_text_input);
+        TextInputEditText commentInput = findViewById(R.id.comment_text_input);
+        EditText nameInput = findViewById(R.id.eventNameText);
         addFeedbackToDB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String key = feedbackReference.push().getKey();
-                String comment = textInput.getText().toString();
+                String comment = commentInput.getText().toString();
+                String name = nameInput.getText().toString();
                 int rating = ratingGroup.getCheckedRadioButtonId();
                 if(rating != -1) {
                     RadioButton ratingButton = findViewById(rating);
@@ -35,8 +38,16 @@ public class FeedbackFragment extends AppCompatActivity {
                 } else {
                     rating = 0;
                 }
-                Feedback feedback = new Feedback(rating, comment, "name_of_event");
-                feedbackReference.child(key).setValue(feedback);
+                if(name.isEmpty()) {
+                    Toast.makeText(FeedbackFragment.this,
+                            "Please include the name of the event", Toast.LENGTH_SHORT).show();
+                } else {
+                    Feedback feedback = new Feedback(rating, comment, name);
+                    feedbackReference.child(key).setValue(feedback);
+                    Toast.makeText(FeedbackFragment.this,
+                            "Thank you for your feedback", Toast.LENGTH_LONG).show();
+                    finish();
+                }
             }
         });
     }
