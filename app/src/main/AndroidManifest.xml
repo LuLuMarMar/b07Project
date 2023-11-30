@@ -32,6 +32,7 @@
         <activity android:name=".AnnouncementsListActivity" />
         <activity android:name=".PostAnnouncementsActivity" />
         <activity android:name=".ReceiveComplaintActivity" />
+        <activity android:name=".HomeActivity"/>
     </application>
 
 </manifest>
