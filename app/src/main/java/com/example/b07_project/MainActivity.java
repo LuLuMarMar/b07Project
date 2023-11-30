@@ -5,20 +5,9 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import androidx.core.view.WindowCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.Button;
-import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.b07_project.databinding.ActivityMainBinding;
-
-import android.view.Menu;
-import android.view.MenuItem;
+import com.example.b07_project.PostAnnouncementsActivity;
+import com.example.b07_project.ReceiveComplaintActivity;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -61,6 +50,24 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Open ComplaintActivity when the button is clicked
                 Intent intent = new Intent(MainActivity.this, ComplaintActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button switchComplaintsButton = findViewById(R.id.btnViewComplaints);
+        switchComplaintsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ReceiveComplaintActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button switchAnnouncementsButton = findViewById(R.id.btnPostAnnouncements);
+        switchAnnouncementsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, PostAnnouncementsActivity.class);
                 startActivity(intent);
             }
         });

@@ -29,6 +29,9 @@
         <activity android:name=".FormActivity" />
         <activity android:name=".FeedbackActivity"/>
         <activity android:name=".ComplaintActivity" />
+        <activity android:name=".AnnouncementsListActivity" />
+        <activity android:name=".PostAnnouncementsActivity" />
+        <activity android:name=".ReceiveComplaintActivity" />
     </application>
 
 </manifest>
