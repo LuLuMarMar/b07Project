@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/postPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#3498db"
+        android:padding="22dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="POSt Requirements"
+            android:layout_gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="24sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select a level and program to see if you qualify."
+            android:layout_gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <RadioGroup
+        android:id="@+id/radioGroupProgram"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/radioGroupLevel"
+        android:layout_marginTop="16dp"
+        >
+
+        <RadioButton
+            android:id="@+id/radioProgramA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Computer Science"/>
+
+        <RadioButton
+            android:id="@+id/radioProgramB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mathematics"/>
+
+        <RadioButton
+            android:id="@+id/radioProgramC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Statistics"
+            />
+    </RadioGroup>
+    <RadioGroup
+        android:id="@+id/radioGroupLevel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_below="@id/postPanel"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radioMinor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Minor" />
+
+        <RadioButton
+            android:id="@+id/radioMajor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Major" />
+
+        <RadioButton
+            android:id="@+id/radioSpecialist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Specialist" />
+    </RadioGroup>
+
+
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/radioGroupProgram"
+        android:layout_marginTop="16dp"
+        android:text="Submit"
+        android:layout_centerHorizontal="true"
+        />
+
+    <TextView
+        android:id="@+id/tvRequirements"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnSubmit"
+        android:layout_marginTop="16dp"
+        android:text=""
+        android:textSize="18sp"/>
+</RelativeLayout>
