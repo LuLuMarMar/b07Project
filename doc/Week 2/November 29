@@ -1,8 +1,9 @@
 Helina:
 Done
  - Completed User Story 10 coding
+ - Configured git push in Android Studio
+ - Integrated my code into the main project
 Planned
  - Refine UI
  - Add handling of exceptions
- - Figure out how to push the project to git
  - (If all of the above is done) Refine the announcement list and add a delete function
