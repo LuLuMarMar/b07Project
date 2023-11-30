@@ -14,7 +14,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class FeedbackFragment extends AppCompatActivity {
+public class FeedbackFragment extends AppCompatActivity { //Fragments should extend Fragment super class
 
     private DatabaseReference feedbackReference;
     @Override
