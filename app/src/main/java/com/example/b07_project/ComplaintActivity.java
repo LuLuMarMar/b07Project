@@ -13,6 +13,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import android.graphics.Color;
 
 public class ComplaintActivity extends AppCompatActivity {
 
@@ -44,6 +45,14 @@ public class ComplaintActivity extends AppCompatActivity {
 
         // Display complaints from the database
         displayComplaintsFromDatabase();
+        Button btnBack = findViewById(R.id.btnBack);
+        btnBack.setBackgroundColor(Color.BLUE);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     // Display complaints from the database
