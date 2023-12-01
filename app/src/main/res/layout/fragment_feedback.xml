@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
+        android:fontFamily="@font/alata"
         android:text="@string/feedback_button_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="@color/uoft_primary"
-        android:fontFamily="@font/allerta"
+        android:fontFamily="@font/alata"
         android:gravity="center|center_horizontal|center_vertical"
         android:text="@string/feedback_text"
         android:textColor="@color/uoft_lightgrey"
@@ -42,14 +43,14 @@
         app:layout_constraintBottom_toTopOf="@+id/feedback_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eventNameText"
+        app:layout_constraintTop_toBottomOf="@+id/ratingGroup"
         app:layout_constraintVertical_bias="0.0">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/comment_text_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/allerta"
+            android:fontFamily="@font/alata"
             android:gravity="center"
             android:hint="Feedback"
             android:maxLines="17" />
@@ -59,11 +60,11 @@
         android:id="@+id/ratingGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="25dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/feedback_text">
+        app:layout_constraintTop_toBottomOf="@+id/feedbackText">
 
         <RadioButton
             android:id="@+id/ratingOne"
@@ -73,7 +74,7 @@
             android:layout_weight="1"
             android:button="@null"
             android:drawableBottom="?android:attr/listChoiceIndicatorSingle"
-            android:fontFamily="@font/allerta"
+            android:fontFamily="@font/alata"
             android:gravity="center_horizontal|bottom"
             android:shadowColor="@color/black"
             android:shadowDx="0"
@@ -92,7 +93,7 @@
             android:layout_weight="1"
             android:button="@null"
             android:drawableBottom="?android:attr/listChoiceIndicatorSingle"
-            android:fontFamily="@font/allerta"
+            android:fontFamily="@font/alata"
             android:gravity="center_horizontal|bottom"
             android:shadowColor="@color/black"
             android:shadowDx="0"
@@ -111,7 +112,7 @@
             android:layout_weight="1"
             android:button="@null"
             android:drawableBottom="?android:attr/listChoiceIndicatorSingle"
-            android:fontFamily="@font/allerta"
+            android:fontFamily="@font/alata"
             android:gravity="center_horizontal|bottom"
             android:shadowColor="@color/black"
             android:shadowDx="0"
@@ -130,7 +131,7 @@
             android:layout_weight="1"
             android:button="@null"
             android:drawableBottom="?android:attr/listChoiceIndicatorSingle"
-            android:fontFamily="@font/allerta"
+            android:fontFamily="@font/alata"
             android:gravity="center_horizontal|bottom"
             android:shadowColor="@color/black"
             android:shadowDx="0"
@@ -148,7 +149,7 @@
             android:layout_weight="1"
             android:button="@null"
             android:drawableBottom="?android:attr/listChoiceIndicatorSingle"
-            android:fontFamily="@font/allerta"
+            android:fontFamily="@font/alata"
             android:gravity="center_horizontal|bottom"
             android:shadowColor="@color/black"
             android:shadowDx="0"
@@ -161,20 +162,19 @@
 
     </RadioGroup>
 
-    <EditText
-        android:id="@+id/eventNameText"
-        android:layout_width="350dp"
+    <TextView
+        android:id="@+id/feedbackText"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:inputType="text"
-        android:minHeight="48dp"
-        android:hint="Event Name"
-        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/alata"
         android:gravity="center"
-        android:fontFamily="@font/allerta"
+        android:text="How was your experience in"
+        android:textColor="#807B7B"
+        android:textSize="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ratingGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/feedback_text"
+        tools:ignore="TextSizeCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
