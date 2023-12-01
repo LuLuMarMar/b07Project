@@ -206,6 +206,10 @@ public class EventActivity extends AppCompatActivity {
                 Intent intent = new Intent(EventActivity.this, AddFeedbackActivity.class);
                 intent.putExtra("eventName", name);
                 startActivity(intent);
+                isListClickable = true;
+                if (dimmingLayout != null && dimmingLayout.getParent() != null) {
+                    ((ViewGroup) dimmingLayout.getParent()).removeView(dimmingLayout);
+                }
                 alertDialog.dismiss();
             }
         });
