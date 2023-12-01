@@ -3,6 +3,7 @@ package com.example.b07_project;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.app.AlertDialog;
@@ -29,9 +31,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EventActivity extends AppCompatActivity {
-
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog alertDialog;
+    private boolean isListClickable;
+    private ImageButton exitEventDetails;
     private TextView eventName;
     private TextView eventDate;
     private TextView eventSpace;
@@ -43,6 +46,7 @@ public class EventActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
+        isListClickable = true;
         eventReference = FirebaseDatabase.getInstance().getReference("events");
         listViewEvent = findViewById(R.id.listViewEvent);
         eventList = new ArrayList<>();
@@ -50,9 +54,7 @@ public class EventActivity extends AppCompatActivity {
         displayFeedback();
 
         Button btnBack = findViewById(R.id.btnBack);
-        Button btnAddFeedback = findViewById(R.id.btnAddFeedback);
         btnBack.setBackgroundColor(Color.parseColor("#007FA3"));
-        btnAddFeedback.setBackgroundColor(Color.parseColor("#007FA3"));
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,46 +62,41 @@ public class EventActivity extends AppCompatActivity {
                 finish();
             }
         });
-        btnAddFeedback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(EventActivity.this, FeedbackFragment.class);
-                startActivity(intent);
-            }
-        });
         listViewEvent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                getEvent(position, new EventCallback() {
-                    @Override
-                    public void onEventRetrieved(String eventKey) {
-                        DatabaseReference eventSelectedReference =  eventReference.child(eventKey);
-                        eventSelectedReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                if (dataSnapshot.exists()) {
-                                    String name = dataSnapshot.child("name").getValue(String.class);
-                                    long limit = dataSnapshot.child("limit").getValue(Long.class);
-                                    long day = dataSnapshot.child("day").getValue(Long.class);
-                                    long month = dataSnapshot.child("month").getValue(Long.class);
-                                    long year = dataSnapshot.child("year").getValue(Long.class);
-                                    String date = month + "/" + day + "/" + year;
-                                    showAlertDialog(R.layout.layout_event, name, date, limit, eventKey);
+                if(isListClickable) {
+                    getEvent(position, new EventCallback() {
+                        @Override
+                        public void onEventRetrieved(String eventKey) {
+                            DatabaseReference eventSelectedReference =  eventReference.child(eventKey);
+                            eventSelectedReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()) {
+                                        String name = dataSnapshot.child("name").getValue(String.class);
+                                        long limit = dataSnapshot.child("limit").getValue(Long.class);
+                                        long day = dataSnapshot.child("day").getValue(Long.class);
+                                        long month = dataSnapshot.child("month").getValue(Long.class);
+                                        long year = dataSnapshot.child("year").getValue(Long.class);
+                                        String date = month + "/" + day + "/" + year;
+                                        showAlertDialog(R.layout.layout_event, name, date, limit, eventKey);
+                                    }
                                 }
-                            }
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-                                // Handle error
-                            }
-                        });
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        // Handle cancellation or error
-                        Log.e("FirebaseError", "Error: " + databaseError.getMessage());
-                    }
-                });
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    // Handle error
+                                }
+                            });
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            // Handle cancellation or error
+                            Log.e("FirebaseError", "Error: " + databaseError.getMessage());
+                        }
+                    });
+                }
             }
         });
     }
@@ -161,7 +158,7 @@ public class EventActivity extends AppCompatActivity {
         final boolean[] flagButton = {false};
         dialogBuilder = new AlertDialog.Builder(this);
         View layoutView = getLayoutInflater().inflate(layout, null);
-
+        View dimmingLayout = LayoutInflater.from(this).inflate(R.layout.dimming_layout, null);
         Button btnRSVP = layoutView.findViewById(R.id.btnRSVP);
         Button btnAddFB = layoutView.findViewById(R.id.btnAddFB);
         if(flagButton[0]) {
@@ -171,6 +168,7 @@ public class EventActivity extends AppCompatActivity {
         }
         btnAddFB.setBackgroundColor(Color.parseColor("#F2F4F7"));
 
+        exitEventDetails = layoutView.findViewById(R.id.exitEventDetails);
         eventName = layoutView.findViewById(R.id.eventName);
         eventDate = layoutView.findViewById(R.id.eventDate);
         eventSpace = layoutView.findViewById(R.id.eventSpace);
@@ -180,6 +178,10 @@ public class EventActivity extends AppCompatActivity {
 
         dialogBuilder.setView(layoutView);
         alertDialog = dialogBuilder.create();
+        addContentView(dimmingLayout, new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT));
+        isListClickable = false;
         alertDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.getWindow().addFlags(WindowManager.LayoutParams.DIM_AMOUNT_CHANGED);
@@ -201,12 +203,22 @@ public class EventActivity extends AppCompatActivity {
         btnAddFB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(EventActivity.this, FeedbackFragment.class);
+                Intent intent = new Intent(EventActivity.this, AddFeedbackActivity.class);
                 intent.putExtra("eventName", name);
                 startActivity(intent);
                 alertDialog.dismiss();
             }
         });
-    }
 
+        exitEventDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isListClickable = true;
+                if (dimmingLayout != null && dimmingLayout.getParent() != null) {
+                    ((ViewGroup) dimmingLayout.getParent()).removeView(dimmingLayout);
+                }
+                alertDialog.dismiss();
+            }
+        });
+    }
 }

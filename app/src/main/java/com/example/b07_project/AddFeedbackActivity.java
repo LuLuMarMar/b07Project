@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -16,7 +15,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class FeedbackFragment extends AppCompatActivity {
+public class AddFeedbackActivity extends AppCompatActivity {
     private DatabaseReference feedbackReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +44,7 @@ public class FeedbackFragment extends AppCompatActivity {
                 }
                 Feedback feedback = new Feedback(rating, comment, name);
                 feedbackReference.child(key).setValue(feedback);
-                Toast.makeText(FeedbackFragment.this,
+                Toast.makeText(AddFeedbackActivity.this,
                         "Thank you for your feedback", Toast.LENGTH_LONG).show();
                 finish();
             }
