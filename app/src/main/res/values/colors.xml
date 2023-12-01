@@ -5,4 +5,6 @@
     <color name="uoft_primary">#25355A</color>
     <color name="uoft_secondary">#007FA3</color>
     <color name="uoft_lightgrey">#F2F4F7</color>
+    <color name="light_red">#FF5E5E</color>
+    <color name="light_green">#73D577</color>
 </resources>

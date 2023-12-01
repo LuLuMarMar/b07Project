@@ -1,6 +1,5 @@
 package com.example.b07_project;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,11 +7,14 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class PostreqActivity extends AppCompatActivity {
 
     private RadioGroup radioGroupLevel, radioGroupCredits;
-    private Button btnSubmit;
+    private Button btnSubmit, btnBack;
     private EditText editTextCourse1, editTextCourse2, editTextCourse3, editTextCourse4, editTextCourse5;
     private String selectedLevel, selectedCredits;
     private double gradeCourse1, gradeCourse2, gradeCourse3, gradeCourse4, gradeCourse5;
@@ -25,6 +27,7 @@ public class PostreqActivity extends AppCompatActivity {
         radioGroupLevel = findViewById(R.id.radioGroupLevel);
         radioGroupCredits = findViewById(R.id.radioGroupCredits);
         btnSubmit = findViewById(R.id.btnSubmit);
+        btnBack = findViewById(R.id.btnBack);
         editTextCourse1 = findViewById(R.id.editTextCourse1);
         editTextCourse2 = findViewById(R.id.editTextCourse2);
         editTextCourse3 = findViewById(R.id.editTextCourse3);
@@ -34,8 +37,17 @@ public class PostreqActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveValues();
-                showRequirements();
+                if (isValidForm()) {
+                    saveValues();
+                    showRequirements();
+                }
+            }
+        });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
 
@@ -56,6 +68,20 @@ public class PostreqActivity extends AppCompatActivity {
         });
     }
 
+    private boolean isValidForm() {
+        if (radioGroupLevel.getCheckedRadioButtonId() == -1 ||
+                radioGroupCredits.getCheckedRadioButtonId() == -1 ||
+                !isValidGrade(editTextCourse1.getText().toString()) ||
+                !isValidGrade(editTextCourse2.getText().toString()) ||
+                !isValidGrade(editTextCourse3.getText().toString()) ||
+                !isValidGrade(editTextCourse4.getText().toString()) ||
+                !isValidGrade(editTextCourse5.getText().toString())) {
+            Toast.makeText(PostreqActivity.this, "Please fill in all fields and enter valid grades (0.0-4.0).", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
     private void saveValues() {
         // Save the entered grades in variables
         gradeCourse1 = getGradeFromEditText(editTextCourse1);
@@ -69,36 +95,50 @@ public class PostreqActivity extends AppCompatActivity {
         String gradeString = editText.getText().toString();
         if (!gradeString.isEmpty()) {
             try {
-                return Double.parseDouble(gradeString);
+                double grade = Double.parseDouble(gradeString);
+                if (grade >= 0 && grade <= 4) {
+                    return grade;
+                }
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
         }
-        return 0.0; // Default value if the grade is not entered or invalid
+        return 0.0;
+    }
+
+    private boolean isValidGrade(String grade) {
+        if (!grade.isEmpty()) {
+            try {
+                double numericGrade = Double.parseDouble(grade);
+                return numericGrade >= 0 && numericGrade <= 4;
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
     }
 
     private void showRequirements() {
-       double avg = (gradeCourse1 + gradeCourse2 + gradeCourse3+ gradeCourse4 + gradeCourse5)/5;
+        double avg = (gradeCourse1 + gradeCourse2 + gradeCourse3 + gradeCourse4 + gradeCourse5) / 5;
 
-        // Example: Display the saved values in the TextView
         TextView tvRequirements = findViewById(R.id.tvRequirements);
-        tvRequirements.setText(selectedLevel);
 
-//        if (selectedLevel == "Minor"){
-//            if (gradeCourse5 >= 0.7 && gradeCourse4 >= 0.7 &&gradeCourse3 >= 0.7 &&gradeCourse2 >= 0.7 &&gradeCourse1 >= 0.7 && selectedCredits=="Yes"){
-//                tvRequirements.setText("You qualify for Computer Science POSt Minor.");
-//            }
-//        }
-//
-//        else {
-//            if (gradeCourse5 >= 0.7 && gradeCourse4 >= 0.7 &&gradeCourse3 >= 0.7 &&gradeCourse2 >= 0.7 &&gradeCourse1 >= 0.7 && selectedCredits=="Yes" && avg>=2.5 && gradeCourse2>=3.0 && (gradeCourse5>2.3&&gradeCourse4>2.3 || gradeCourse5>2.3&&gradeCourse1>2.3|| gradeCourse4>2.3&&gradeCourse1>2.3)){
-//                tvRequirements.setText("You qualify for Computer Science POSt Major / Specialist.");
-//            }
-//
-//            else{
-//                tvRequirements.setText("You do not qualify for Computer Science POSt.");
-//            }
-//        }
+        if (selectedLevel.equals("Minor")) {
+            if (gradeCourse5 >= 0.7 && gradeCourse4 >= 0.7 && gradeCourse3 >= 0.7 && gradeCourse2 >= 0.7 && gradeCourse1 >= 0.7 && selectedCredits.equals("Yes")) {
+                tvRequirements.setText("You qualify for Computer Science POSt Minor.");
+                tvRequirements.setBackgroundColor(getResources().getColor(R.color.light_green));
+            }
+        } else {
+            if (gradeCourse5 >= 0.7 && gradeCourse4 >= 0.7 && gradeCourse3 >= 0.7 && gradeCourse2 >= 0.7 && gradeCourse1 >= 0.7 && selectedCredits.equals("Yes") && avg >= 2.5 && gradeCourse2 >= 3.0 && (gradeCourse5 > 2.3 && gradeCourse4 > 2.3 || gradeCourse5 > 2.3 && gradeCourse1 > 2.3 || gradeCourse4 > 2.3 && gradeCourse1 > 2.3)) {
+                tvRequirements.setText("You qualify for Computer Science POSt " + selectedLevel);
+                tvRequirements.setBackgroundColor(getResources().getColor(R.color.light_green));
+            } else {
+                tvRequirements.setText("You do not qualify for Computer Science POSt " + selectedLevel);
+                tvRequirements.setBackgroundColor(getResources().getColor(R.color.light_red));
+            }
 
+           // -reset all values after submitting
+           // - check empty grades
+        }
     }
 }

@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#3498db"
-        android:padding="22dp"
+        android:padding="14dp"
         android:orientation="vertical">
 
         <TextView
@@ -32,7 +32,7 @@
         android:id="@+id/radioGroupLevel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="7dp"
         android:layout_below="@id/postPanel"
         android:orientation="horizontal">
 
@@ -59,9 +59,9 @@
         android:id="@+id/selectrequest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="6dp"
         android:layout_below="@id/radioGroupLevel"
-        android:text="Please enter your final GPA for the following courses. Enter 0 if you have not completed it."
+        android:text="Please enter your final GPA for the following courses if you have completed them."
         android:layout_centerInParent="true"
         android:layout_centerHorizontal="true"
         android:textSize="16sp"/>
@@ -168,6 +168,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/editTextCourse5"
             android:text=""
+            android:padding="8dp"
+            android:background="#3498db"
             android:layout_centerInParent="true"
             android:layout_centerHorizontal="true"
             android:textSize="18sp"/>
@@ -183,6 +185,20 @@
         android:text="Submit"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"/>
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="127dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="0dp"
+        android:text="Back" />
 
 
 </RelativeLayout>
