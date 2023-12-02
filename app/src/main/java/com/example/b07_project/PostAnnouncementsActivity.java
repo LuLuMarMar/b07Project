@@ -64,6 +64,10 @@ public class PostAnnouncementsActivity extends AppCompatActivity {
         String key = databaseReference.push().getKey(); // Generate a unique key for the announcement
         databaseReference.child(key).setValue(newAnnouncement);
 
+        // Show a notification for the new announcement
+        NotificationHelper.showAnnouncementNotification(this, "New Announcement", newAnnouncement);
+
+
         // Clear the EditText
         announcementEditText.setText("");
     }
