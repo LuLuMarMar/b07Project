@@ -17,11 +17,12 @@ public class MainActivity extends AppCompatActivity {
         btnGoToHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Open FormActivity when the button is clicked
+
                 Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         });
     }
+
 
 }
