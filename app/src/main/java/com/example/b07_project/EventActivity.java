@@ -198,12 +198,20 @@ public class EventActivity extends AppCompatActivity {
                         eventReference.child(dataSnapshot.getKey())
                                 .child("limit").setValue(limit - 1);
                         Toast.makeText(EventActivity.this,
-                                "Successful RSVP", Toast.LENGTH_LONG).show();
+                                "Accepted Invitation", Toast.LENGTH_LONG).show();
                         btnAddFB.setEnabled(true);
-                        btnRSVP.setEnabled(false);
                         btnAddFB.setBackgroundColor(Color.parseColor("#F2F4F7"));
                         btnRSVP.setBackgroundColor(Color.parseColor("#8F9196"));
                         flagEventRSVP[position] = true;
+                    } else {
+                        eventReference.child(dataSnapshot.getKey())
+                                .child("limit").setValue(limit + 1);
+                        Toast.makeText(EventActivity.this,
+                                "Denied Invitation", Toast.LENGTH_LONG).show();
+                        btnAddFB.setEnabled(false);
+                        btnAddFB.setBackgroundColor(Color.parseColor("#8F9196"));
+                        btnRSVP.setBackgroundColor(Color.parseColor("#F2F4F7"));
+                        flagEventRSVP[position] = false;
                     }
                 } else {
                     Toast.makeText(EventActivity.this,
