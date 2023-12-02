@@ -41,19 +41,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="159dp"
             android:layout_marginTop="16dp"
             android:text="Back" />
 
-        <Button
-            android:id="@+id/btnAddFeedback"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="211dp"
-            android:layout_marginTop="16dp"
-            android:text="Add Feedback" />
     </RelativeLayout>
 
 
