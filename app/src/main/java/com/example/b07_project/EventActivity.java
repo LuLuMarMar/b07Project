@@ -31,9 +31,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EventActivity extends AppCompatActivity {
+    private boolean isListClickable;
+    private boolean[] flagEventRSVP;
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog alertDialog;
-    private boolean isListClickable;
     private ImageButton exitEventDetails;
     private TextView eventName;
     private TextView eventDate;
@@ -50,18 +51,15 @@ public class EventActivity extends AppCompatActivity {
         eventReference = FirebaseDatabase.getInstance().getReference("events");
         listViewEvent = findViewById(R.id.listViewEvent);
         eventList = new ArrayList<>();
-
-        displayFeedback();
-
         Button btnBack = findViewById(R.id.btnBack);
         btnBack.setBackgroundColor(Color.parseColor("#007FA3"));
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Finish the current activity and go back to the main page
                 finish();
             }
         });
+        displayFeedback();
         listViewEvent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -74,13 +72,7 @@ public class EventActivity extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     if (dataSnapshot.exists()) {
-                                        String name = dataSnapshot.child("name").getValue(String.class);
-                                        long limit = dataSnapshot.child("limit").getValue(Long.class);
-                                        long day = dataSnapshot.child("day").getValue(Long.class);
-                                        long month = dataSnapshot.child("month").getValue(Long.class);
-                                        long year = dataSnapshot.child("year").getValue(Long.class);
-                                        String date = month + "/" + day + "/" + year;
-                                        showAlertDialog(R.layout.layout_event, name, date, limit, eventKey);
+                                        showAlertDialog(R.layout.layout_event, position, dataSnapshot);
                                     }
                                 }
 
@@ -103,17 +95,20 @@ public class EventActivity extends AppCompatActivity {
 
     private void displayFeedback() {
         eventReference.addValueEventListener(new ValueEventListener() {
-
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // Clear the previous feedback
-                eventList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    eventList.add(snapshot.child("name").getValue(String.class));
+                if (dataSnapshot.exists()) {
+                    long numEvents = dataSnapshot.getChildrenCount();
+                    if (flagEventRSVP == null) {
+                        flagEventRSVP = new boolean[(int) numEvents];
+                    }
+                    eventList.clear();
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        eventList.add(snapshot.child("name").getValue(String.class));
+                    }
+                    updateFeedbackListView();
                 }
-                updateFeedbackListView();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Handle errors, if any
@@ -154,26 +149,34 @@ public class EventActivity extends AppCompatActivity {
             }
         });
     }
-    private void showAlertDialog(int layout, String name, String date, long limit, String eventKey){
-        final boolean[] flagButton = {false};
+    private void showAlertDialog(int layout, int position, DataSnapshot dataSnapshot) {
+        String name = dataSnapshot.child("name").getValue(String.class);
+        long limit = dataSnapshot.child("limit").getValue(Long.class);
+        long day = dataSnapshot.child("day").getValue(Long.class);
+        long month = dataSnapshot.child("month").getValue(Long.class);
+        long year = dataSnapshot.child("year").getValue(Long.class);
+
         dialogBuilder = new AlertDialog.Builder(this);
         View layoutView = getLayoutInflater().inflate(layout, null);
         View dimmingLayout = LayoutInflater.from(this).inflate(R.layout.dimming_layout, null);
         Button btnRSVP = layoutView.findViewById(R.id.btnRSVP);
         Button btnAddFB = layoutView.findViewById(R.id.btnAddFB);
-        if(flagButton[0]) {
+
+        if(flagEventRSVP[position]) {
+            btnAddFB.setBackgroundColor(Color.parseColor("#F2F4F7"));
             btnRSVP.setBackgroundColor(Color.parseColor("#8F9196"));
         } else {
+            btnAddFB.setEnabled(false);
+            btnAddFB.setBackgroundColor(Color.parseColor("#8F9196"));
             btnRSVP.setBackgroundColor(Color.parseColor("#F2F4F7"));
         }
-        btnAddFB.setBackgroundColor(Color.parseColor("#F2F4F7"));
 
         exitEventDetails = layoutView.findViewById(R.id.exitEventDetails);
         eventName = layoutView.findViewById(R.id.eventName);
         eventDate = layoutView.findViewById(R.id.eventDate);
         eventSpace = layoutView.findViewById(R.id.eventSpace);
         eventName.setText(name);
-        eventDate.setText(date);
+        eventDate.setText(month + "/" + day + "/" + year);
         eventSpace.setText("Remaining Seats: " + limit);
 
         dialogBuilder.setView(layoutView);
@@ -190,13 +193,21 @@ public class EventActivity extends AppCompatActivity {
         btnRSVP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!flagButton[0]) {
-                    eventReference.child(eventKey).child("limit").setValue(limit - 1);
+                if(limit > 0) {
+                    if(!flagEventRSVP[position]) {
+                        eventReference.child(dataSnapshot.getKey())
+                                .child("limit").setValue(limit - 1);
+                        Toast.makeText(EventActivity.this,
+                                "Successful RSVP", Toast.LENGTH_LONG).show();
+                        btnAddFB.setEnabled(true);
+                        btnRSVP.setEnabled(false);
+                        btnAddFB.setBackgroundColor(Color.parseColor("#F2F4F7"));
+                        btnRSVP.setBackgroundColor(Color.parseColor("#8F9196"));
+                        flagEventRSVP[position] = true;
+                    }
+                } else {
                     Toast.makeText(EventActivity.this,
-                            "Successful RSVP", Toast.LENGTH_LONG).show();
-                    btnRSVP.setEnabled(false);
-                    btnRSVP.setBackgroundColor(Color.parseColor("#8F9196"));
-                    flagButton[0] = true;
+                            "The event is full!", Toast.LENGTH_LONG).show();
                 }
             }
         });
