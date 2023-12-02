@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:layout_below="@id/radioGroupLevel"
-        android:text="Please enter your final GPA for the following courses if you have completed them."
+        android:text="Please enter your final GPA for the following courses. Enter 0 if you have not completed them."
         android:layout_centerInParent="true"
         android:layout_centerHorizontal="true"
         android:textSize="16sp"/>

@@ -117,6 +117,15 @@ public class PostreqActivity extends AppCompatActivity {
         }
         return false;
     }
+    private void resetValues() {
+        radioGroupLevel.clearCheck();
+        radioGroupCredits.clearCheck();
+        editTextCourse1.setText("");
+        editTextCourse2.setText("");
+        editTextCourse3.setText("");
+        editTextCourse4.setText("");
+        editTextCourse5.setText("");
+    }
 
     private void showRequirements() {
         double avg = (gradeCourse1 + gradeCourse2 + gradeCourse3 + gradeCourse4 + gradeCourse5) / 5;
@@ -128,17 +137,28 @@ public class PostreqActivity extends AppCompatActivity {
                 tvRequirements.setText("You qualify for Computer Science POSt Minor.");
                 tvRequirements.setBackgroundColor(getResources().getColor(R.color.light_green));
             }
+            else {
+                tvRequirements.setText("You do not qualify for Computer Science POSt " + selectedLevel);
+                tvRequirements.setBackgroundColor(getResources().getColor(R.color.light_red));
+            }
         } else {
-            if (gradeCourse5 >= 0.7 && gradeCourse4 >= 0.7 && gradeCourse3 >= 0.7 && gradeCourse2 >= 0.7 && gradeCourse1 >= 0.7 && selectedCredits.equals("Yes") && avg >= 2.5 && gradeCourse2 >= 3.0 && (gradeCourse5 > 2.3 && gradeCourse4 > 2.3 || gradeCourse5 > 2.3 && gradeCourse1 > 2.3 || gradeCourse4 > 2.3 && gradeCourse1 > 2.3)) {
+            if (gradeCourse5 >= 0.7 && gradeCourse4 >= 0.7 && gradeCourse3 >= 0.7 && gradeCourse2 >= 0.7 && gradeCourse1 >= 0.7 && selectedCredits.equals("Yes") && avg >= 2.5 && gradeCourse2 >= 3.0 && (gradeCourse5 > 1.7 && gradeCourse4 > 1.7 || gradeCourse5 > 1.7 && gradeCourse1 > 1.7 || gradeCourse4 >1.7 && gradeCourse1 > 1.7)) {
                 tvRequirements.setText("You qualify for Computer Science POSt " + selectedLevel);
                 tvRequirements.setBackgroundColor(getResources().getColor(R.color.light_green));
-            } else {
+            }
+            else {
                 tvRequirements.setText("You do not qualify for Computer Science POSt " + selectedLevel);
                 tvRequirements.setBackgroundColor(getResources().getColor(R.color.light_red));
             }
 
-           // -reset all values after submitting
-           // - check empty grades
+//            radioGroupLevel.clearCheck();
+//            radioGroupCredits.clearCheck();
+//            editTextCourse1.setText("");
+//            editTextCourse2.setText("");
+//            editTextCourse3.setText("");
+//            editTextCourse4.setText("");
+//            editTextCourse5.setText("");
         }
+
     }
 }
