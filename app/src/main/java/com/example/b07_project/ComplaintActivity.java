@@ -54,7 +54,6 @@ public class ComplaintActivity extends AppCompatActivity {
         });
 
         displayComplaintsFromDatabase();
-
     }
 
     private void displayComplaintsFromDatabase() {
