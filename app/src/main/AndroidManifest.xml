@@ -34,6 +34,8 @@
         <activity android:name=".ReceiveComplaintActivity" />
         <activity android:name=".HomeActivity"/>
         <activity android:name=".PostreqActivity"/>
+        <activity android:name=".NotificationsActivity"/>
+
     </application>
 
 </manifest>

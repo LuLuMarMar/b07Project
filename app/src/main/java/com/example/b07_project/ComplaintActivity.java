@@ -54,14 +54,6 @@ public class ComplaintActivity extends AppCompatActivity {
         });
 
         displayComplaintsFromDatabase();
-        Button btnBack = findViewById(R.id.goBackButton);
-        btnBack.setBackgroundColor(Color.BLUE);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 
     private void displayComplaintsFromDatabase() {
