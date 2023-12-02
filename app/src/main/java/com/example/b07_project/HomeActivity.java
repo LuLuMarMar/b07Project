@@ -70,6 +70,15 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button postButton = findViewById(R.id.btnPostReq);
+        postButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, PostreqActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 }
