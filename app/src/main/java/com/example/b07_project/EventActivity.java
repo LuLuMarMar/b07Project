@@ -222,7 +222,7 @@ public class EventActivity extends AppCompatActivity {
         btnAddFB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(EventActivity.this, AddFeedbackActivity.class);
+                Intent intent = new Intent(EventActivity.this, FeedbackFragment.class);
                 intent.putExtra("eventName", name);
                 startActivity(intent);
                 isListClickable = true;
