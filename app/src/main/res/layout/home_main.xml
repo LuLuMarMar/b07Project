@@ -70,4 +70,12 @@
         android:layout_marginTop="16dp"
         android:text="POSt Requirements"/>
 
+    <Button
+        android:id="@+id/btnNotifications"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnPostReq"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Notifications"/>
 </RelativeLayout>

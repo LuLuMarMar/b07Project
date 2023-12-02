@@ -1,5 +1,6 @@
 package com.example.b07_project;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -81,7 +82,7 @@ public class PostAnnouncementsActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void backToMain() {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
 }
