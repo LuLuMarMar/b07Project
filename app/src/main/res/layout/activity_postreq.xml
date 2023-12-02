@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/postPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#3498db"
+        android:padding="14dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="POSt Requirements"
+            android:layout_gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="24sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select a level and fill in following fields to see if you qualify"
+            android:layout_gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <RadioGroup
+        android:id="@+id/radioGroupLevel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:layout_below="@id/postPanel"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radioMinor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Minor" />
+
+        <RadioButton
+            android:id="@+id/radioMajor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Major" />
+
+        <RadioButton
+            android:id="@+id/radioSpecialist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Specialist" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/selectrequest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_below="@id/radioGroupLevel"
+        android:text="Please enter your final GPA for the following courses. Enter 0 if you have not completed them."
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="16sp"/>
+
+    <!-- Input boxes for five courses -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/selectrequest"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CSCA67 / MATA67"/>
+
+        <EditText
+            android:id="@+id/editTextCourse1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:hint="Enter Grade"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CSCA48"/>
+
+        <EditText
+            android:id="@+id/editTextCourse2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:hint="Enter Grade"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MATA22"/>
+
+        <EditText
+            android:id="@+id/editTextCourse4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:hint="Enter Grade"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MATA31"/>
+
+        <EditText
+            android:id="@+id/editTextCourse3"
+            android:layout_width="match_parent"
+            android:inputType="numberDecimal"
+            android:layout_height="wrap_content"
+            android:hint="Enter Grade"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MATA37"/>
+
+        <EditText
+            android:id="@+id/editTextCourse5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:hint="Enter Grade"/>
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="Have you completed 4.0 credits?"
+            android:layout_marginTop="5dp"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroupCredits"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_below="@id/postPanel"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioYes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yes" />
+
+            <RadioButton
+                android:id="@+id/radioNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No" />
+
+        </RadioGroup>
+        <TextView
+            android:id="@+id/tvRequirements"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editTextCourse5"
+            android:text=""
+            android:padding="8dp"
+            android:background="#3498db"
+            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="18sp"/>
+    </LinearLayout>
+
+
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Submit"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"/>
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="127dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="0dp"
+        android:text="Back" />
+
+
+</RelativeLayout>

@@ -41,4 +41,33 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:text="View Events"/>
+
+    <Button
+        android:id="@+id/btnViewComplaints"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/btnViewEvents"
+        android:layout_marginTop="16dp"
+        android:onClick="switchToComplaintsUI"
+        android:text="View Complaints" />
+
+    <Button
+        android:id="@+id/btnPostAnnouncements"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/btnViewComplaints"
+        android:layout_marginTop="16dp"
+        android:onClick="switchToAnnouncementUI"
+        android:text="Post Announcements" />
+    <Button
+        android:id="@+id/btnPostReq"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnPostAnnouncements"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="POSt Requirements"/>
+
 </RelativeLayout>

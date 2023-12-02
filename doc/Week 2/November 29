@@ -1,8 +1,16 @@
 Helina:
 Done
- - Completed User Story 10 coding
+ - Implemented Firebase for User Story 10
+ - Configured git push in Android Studio and created a pull
+ - Integrated my code into the main project
 Planned
  - Refine UI
  - Add handling of exceptions
- - Figure out how to push the project to git
  - (If all of the above is done) Refine the announcement list and add a delete function
+
+Anish:
+Done
+-User Story 8
+-Basic Funcionality for user story 9
+Planned
+-Refine user story 9
