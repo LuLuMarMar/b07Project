@@ -2,9 +2,11 @@ package com.example.b07_project;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -25,6 +27,7 @@ public class AddFeedbackActivity extends AppCompatActivity {
         String name = intent.getStringExtra("eventName");
         feedbackReference = FirebaseDatabase.getInstance().getReference("feedback");
         Button addFeedbackToDB = findViewById(R.id.feedback_button);
+        ImageButton btnExit = findViewById(R.id.btnExit);
         addFeedbackToDB.setBackgroundColor(Color.parseColor("#007FA3"));
         RadioGroup ratingGroup = findViewById(R.id.ratingGroup);
         TextInputEditText commentInput = findViewById(R.id.comment_text_input);
@@ -46,6 +49,12 @@ public class AddFeedbackActivity extends AppCompatActivity {
                 feedbackReference.child(key).setValue(feedback);
                 Toast.makeText(AddFeedbackActivity.this,
                         "Thank you for your feedback", Toast.LENGTH_LONG).show();
+                finish();
+            }
+        });
+        btnExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 finish();
             }
         });
