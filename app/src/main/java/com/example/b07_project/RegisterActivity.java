@@ -31,7 +31,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
 
         editEmailRegister = findViewById(R.id.editEmailRegister);
         editPasswordRegister = findViewById(R.id.editPasswordRegister);
-        editConfirmPassword = findViewById(R.id.editConfirmPassword);
+        editConfirmPassword = findViewById(R.id.editPasswordConfirm);
 
         adminRegister = findViewById(R.id.switchAdmin);
 
