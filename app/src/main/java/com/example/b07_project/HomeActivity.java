@@ -21,7 +21,7 @@ public class HomeActivity extends AppCompatActivity {
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         email = user.getEmail().toString();
-        boolean isAdmin = email.contains("@admin_mail");
+        boolean isAdmin = email.contains("@adminmail");
 
         if (!isAdmin) {
             //View Events Button
