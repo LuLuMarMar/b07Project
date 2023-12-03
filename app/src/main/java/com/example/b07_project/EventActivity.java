@@ -3,7 +3,6 @@ package com.example.b07_project;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +21,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,15 +33,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EventActivity extends AppCompatActivity {
-    private boolean isListClickable;
-    private boolean[] flagEventRSVP;
-    private AlertDialog.Builder dialogBuilder;
-    private AlertDialog alertDialog;
-    private ImageButton exitEventDetails;
-    private TextView eventName;
-    private TextView eventDate;
-    private TextView eventSpace;
+    private static final String TAG = "EventActivity";
+    private FirebaseAuth userAuth;
+    private FirebaseAuth.AuthStateListener userAuthListener;
+    private DatabaseReference userDataReference;
     private DatabaseReference eventReference;
+    private boolean isListClickable;
+    private AlertDialog alertDialog;
+    private TextView eventName;
     private ListView listViewEvent;
     private List<String> eventList;
 
@@ -49,6 +50,16 @@ public class EventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_event);
         isListClickable = true;
         eventReference = FirebaseDatabase.getInstance().getReference("events");
+        userDataReference = FirebaseDatabase.getInstance().getReference("user_data");
+        userAuth = FirebaseAuth.getInstance();
+        userAuthListener = (FirebaseAuth.AuthStateListener) (firebaseAuth) -> {
+            FirebaseUser user = firebaseAuth.getCurrentUser();
+            if(user != null) {
+                Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+            } else {
+                Log.d(TAG, "onAuthStateChanged:signed_out");
+            }
+        };
         listViewEvent = findViewById(R.id.listViewEvent);
         eventList = new ArrayList<>();
         Button btnBack = findViewById(R.id.btnBack);
@@ -67,12 +78,14 @@ public class EventActivity extends AppCompatActivity {
                     getEvent(position, new EventCallback() {
                         @Override
                         public void onEventRetrieved(String eventKey) {
-                            DatabaseReference eventSelectedReference =  eventReference.child(eventKey);
-                            eventSelectedReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                            DatabaseReference eventSelectedReference =
+                                    eventReference.child(eventKey);
+                            eventSelectedReference.addListenerForSingleValueEvent(
+                                    new ValueEventListener() {
                                 @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    if (dataSnapshot.exists()) {
-                                        showAlertDialog(R.layout.layout_event, position, dataSnapshot);
+                                public void onDataChange(@NonNull DataSnapshot eventSnapshot) {
+                                    if (eventSnapshot.exists()) {
+                                        showAlertDialog(R.layout.layout_event, eventSnapshot);
                                     }
                                 }
 
@@ -98,10 +111,6 @@ public class EventActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    long numEvents = dataSnapshot.getChildrenCount();
-                    if (flagEventRSVP == null) {
-                        flagEventRSVP = new boolean[(int) numEvents];
-                    }
                     eventList.clear();
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         eventList.add(snapshot.child("name").getValue(String.class));
@@ -117,7 +126,8 @@ public class EventActivity extends AppCompatActivity {
     }
 
     private void updateFeedbackListView() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, eventList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1, eventList);
         listViewEvent.setAdapter(adapter);
     }
 
@@ -149,32 +159,45 @@ public class EventActivity extends AppCompatActivity {
             }
         });
     }
-    private void showAlertDialog(int layout, int position, DataSnapshot dataSnapshot) {
-        String name = dataSnapshot.child("name").getValue(String.class);
-        long limit = dataSnapshot.child("limit").getValue(Long.class);
-        long day = dataSnapshot.child("day").getValue(Long.class);
-        long month = dataSnapshot.child("month").getValue(Long.class);
-        long year = dataSnapshot.child("year").getValue(Long.class);
+    private void showAlertDialog(int layout, DataSnapshot eventSnapshot) {
+        String name = eventSnapshot.child("name").getValue(String.class);
+        long limit = eventSnapshot.child("limit").getValue(Long.class);
+        long day = eventSnapshot.child("day").getValue(Long.class);
+        long month = eventSnapshot.child("month").getValue(Long.class);
+        long year = eventSnapshot.child("year").getValue(Long.class);
 
-        dialogBuilder = new AlertDialog.Builder(this);
+        FirebaseUser user = userAuth.getCurrentUser();
+        assert user != null;
+        String userID = user.getUid();
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         View layoutView = getLayoutInflater().inflate(layout, null);
-        View dimmingLayout = LayoutInflater.from(this).inflate(R.layout.dimming_layout, null);
+        View dimmingLayout = LayoutInflater.from(this)
+                .inflate(R.layout.dimming_layout, null);
         Button btnRSVP = layoutView.findViewById(R.id.btnRSVP);
         Button btnAddFB = layoutView.findViewById(R.id.btnAddFB);
 
-        if(flagEventRSVP[position]) {
-            btnAddFB.setBackgroundColor(Color.parseColor("#F2F4F7"));
-            btnRSVP.setBackgroundColor(Color.parseColor("#8F9196"));
-        } else {
-            btnAddFB.setEnabled(false);
-            btnAddFB.setBackgroundColor(Color.parseColor("#8F9196"));
-            btnRSVP.setBackgroundColor(Color.parseColor("#F2F4F7"));
-        }
+        userDataReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot userSnapshot) {
+                if (userSnapshot.child(userID).hasChild(eventSnapshot.getKey())) {
+                    btnAddFB.setBackgroundColor(Color.parseColor("#F2F4F7"));
+                    btnRSVP.setBackgroundColor(Color.parseColor("#8F9196"));
+                } else {
+                    btnAddFB.setEnabled(false);
+                    btnAddFB.setBackgroundColor(Color.parseColor("#8F9196"));
+                    btnRSVP.setBackgroundColor(Color.parseColor("#F2F4F7"));
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
 
-        exitEventDetails = layoutView.findViewById(R.id.exitEventDetails);
+        ImageButton exitEventDetails = layoutView.findViewById(R.id.exitEventDetails);
         eventName = layoutView.findViewById(R.id.eventName);
-        eventDate = layoutView.findViewById(R.id.eventDate);
-        eventSpace = layoutView.findViewById(R.id.eventSpace);
+        TextView eventDate = layoutView.findViewById(R.id.eventDate);
+        TextView eventSpace = layoutView.findViewById(R.id.eventSpace);
         eventName.setText(name);
         eventDate.setText(month + "/" + day + "/" + year);
         eventSpace.setText("Remaining Seats: " + limit);
@@ -194,25 +217,36 @@ public class EventActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(limit > 0) {
-                    if(!flagEventRSVP[position]) {
-                        eventReference.child(dataSnapshot.getKey())
-                                .child("limit").setValue(limit - 1);
-                        Toast.makeText(EventActivity.this,
-                                "Accepted Invitation", Toast.LENGTH_LONG).show();
-                        btnAddFB.setEnabled(true);
-                        btnAddFB.setBackgroundColor(Color.parseColor("#F2F4F7"));
-                        btnRSVP.setBackgroundColor(Color.parseColor("#8F9196"));
-                        flagEventRSVP[position] = true;
-                    } else {
-                        eventReference.child(dataSnapshot.getKey())
-                                .child("limit").setValue(limit + 1);
-                        Toast.makeText(EventActivity.this,
-                                "Denied Invitation", Toast.LENGTH_LONG).show();
-                        btnAddFB.setEnabled(false);
-                        btnAddFB.setBackgroundColor(Color.parseColor("#8F9196"));
-                        btnRSVP.setBackgroundColor(Color.parseColor("#F2F4F7"));
-                        flagEventRSVP[position] = false;
-                    }
+                    userDataReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot userSnapshot) {
+                            if (userSnapshot.child(userID).hasChild(eventSnapshot.getKey())) {
+                                eventReference.child(eventSnapshot.getKey())
+                                        .child("limit").setValue(limit + 1);
+                                Toast.makeText(EventActivity.this,
+                                        "Denied Invitation", Toast.LENGTH_LONG).show();
+                                btnAddFB.setEnabled(false);
+                                btnAddFB.setBackgroundColor(Color.parseColor("#8F9196"));
+                                btnRSVP.setBackgroundColor(Color.parseColor("#F2F4F7"));
+                                userDataReference.child(userID)
+                                        .child(eventSnapshot.getKey()).removeValue();
+                            } else {
+                                eventReference.child(eventSnapshot.getKey())
+                                        .child("limit").setValue(limit - 1);
+                                Toast.makeText(EventActivity.this,
+                                        "Accepted Invitation", Toast.LENGTH_LONG).show();
+                                btnAddFB.setEnabled(true);
+                                btnAddFB.setBackgroundColor(Color.parseColor("#F2F4F7"));
+                                btnRSVP.setBackgroundColor(Color.parseColor("#8F9196"));
+                                userDataReference.child(userID)
+                                        .child(eventSnapshot.getKey()).setValue(true);
+                            }
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Log.w(TAG, "Failed to read value.", error.toException());
+                        }
+                    });
                 } else {
                     Toast.makeText(EventActivity.this,
                             "The event is full!", Toast.LENGTH_LONG).show();
@@ -222,7 +256,8 @@ public class EventActivity extends AppCompatActivity {
         btnAddFB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(EventActivity.this, AddFeedbackActivity.class);
+                Intent intent = new Intent(EventActivity.this,
+                        AddFeedbackActivity.class);
                 intent.putExtra("eventName", name);
                 startActivity(intent);
                 isListClickable = true;
@@ -243,5 +278,19 @@ public class EventActivity extends AppCompatActivity {
                 alertDialog.dismiss();
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        userAuth.addAuthStateListener(userAuthListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if(userAuthListener != null) {
+            userAuth.removeAuthStateListener(userAuthListener);
+        }
     }
 }
