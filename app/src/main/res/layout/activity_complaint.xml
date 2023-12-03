@@ -5,27 +5,70 @@
     android:layout_height="match_parent"
     tools:context=".ComplaintActivity">
 
+    <LinearLayout
+        android:id="@+id/feedbackPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#673AB7"
+        android:padding="22dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit Complaints"
+            android:layout_gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="24sp" />
+    </LinearLayout>
+
     <EditText
         android:id="@+id/complaintEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter your complaint" />
+        android:layout_below="@id/feedbackPanel"
+        android:hint="Enter your complaint"
+        android:minHeight="48dp" />
 
     <Button
         android:id="@+id/submitComplaintButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/complaintEditText"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:text="Submit Complaint" />
 
     <TextView
-        android:id="@+id/tvDisplayComplaints"
+        android:id="@+id/titleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/submitComplaintButton"
         android:layout_marginTop="16dp"
-        android:text=""
-        android:textSize="16sp" />
+        android:text="Submitted Complaints"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textAlignment="center" />
+
+    <ListView
+        android:id="@+id/complaintsListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleTextView"
+        android:layout_above="@id/goBackButton"
+        android:background="?android:attr/selectableItemBackground"
+        android:clipToPadding="false"
+        android:padding="16dp"></ListView>
+
+    <Button
+        android:id="@+id/goBackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Back" />
+
 
 </RelativeLayout>

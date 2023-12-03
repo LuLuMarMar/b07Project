@@ -18,26 +18,29 @@
             android:layout_gravity="center"
             android:textColor="#ffffff"
             android:textSize="24sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select an event from the dropdown to see its feedback."
+            android:layout_gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="14sp" />
     </LinearLayout>
 
-    <!-- Spinner to select events -->
+    <!-- Spinner for event selection -->
     <Spinner
-        android:id="@+id/eventSpinner"
+        android:id="@+id/spinnerEvents"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/feedbackPanel"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
-        android:padding="8dp"
-        android:background="#CCCCCC"
-        android:clipToOutline="true"
-        android:outlineProvider="background"/>
+        android:padding="12dp"/>
 
     <!-- ListView to display feedback -->
     <ListView
         android:id="@+id/listViewFeedback"
         android:layout_width="match_parent"
-        android:layout_below="@id/eventSpinner"
+        android:layout_below="@id/spinnerEvents"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottomPanel" />
 
@@ -83,5 +86,4 @@
             android:layout_marginTop="16dp"
             android:text="Back" />
     </RelativeLayout>
-
 </RelativeLayout>
