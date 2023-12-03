@@ -21,7 +21,7 @@ public class RegisterModelImpl implements RegisterModel{
     }
 
     boolean AssignAdmin(String email){
-        if(email.contains("@admin_mail")){
+        if(email.contains("@adminmail")){
             return true;
         } else {
             return false;
