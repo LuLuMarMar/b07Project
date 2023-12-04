@@ -18,3 +18,11 @@ Done:
  - Refined UI for user story 7 and 10
 Planned:
  - Start testing
+
+RJ:
+Done
+- Button changed color in AlertDialog when pressed
+- Background buttons are unresponsive when clicked when the AlertDialog is open
+- Added a close button for the event details AlertDialog
+Planned
+- Make the UX better by not having to add the event name when adding feedback

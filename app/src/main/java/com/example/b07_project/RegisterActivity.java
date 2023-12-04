@@ -18,7 +18,6 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
     private Button btnAccountRegister, btnBacktoLogin;
     private EditText editEmailRegister, editPasswordRegister, editConfirmPassword;
     private Switch adminRegister;
-
     private RegisterPresenter presenter;
 
     @Override
@@ -70,7 +69,6 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
             //Admin is checked but email is not @admin_mail
             ShowRegisterFailed();
         }
-
     }
 
     @Override
@@ -84,7 +82,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterView 
     @Override
     public void ShowRegisterFailed() {
         //Display Message and return to login
-        Toast.makeText(this, "Registration Failed please enter the correct credentials", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Registration Failed. Please enter the correct credentials.", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
         startActivity(intent);
     }
