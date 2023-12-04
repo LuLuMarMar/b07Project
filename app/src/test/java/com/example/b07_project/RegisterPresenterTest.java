@@ -9,6 +9,9 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Mockito;
+import org.mockito.MockedStatic;
+import static org.mockito.MockitoAnnotations.openMocks;
 import static org.mockito.Mockito.*;
 
 import com.example.b07_project.model.RegisterModel;
@@ -29,7 +32,7 @@ public class RegisterPresenterTest {
 
     @Before
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
         presenter = new RegisterPresenter(mockModel, mockView);
     }
 
@@ -89,7 +92,6 @@ public class RegisterPresenterTest {
             return null;
         }).when(mockModel).createUserAndPass(anyString(), anyString(), any(RegisterModel.OnRegisterListener.class));
 
-        // Act
         presenter.CreateUserAndPassword(invalidEmail, invalidPassword, isAdmin);
 
         // Assert

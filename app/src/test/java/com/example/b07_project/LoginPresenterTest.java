@@ -31,7 +31,7 @@ public class LoginPresenterTest {
 
     @Before
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
         presenter = new LoginPresenter(mockModel, mockView);
     }
 
