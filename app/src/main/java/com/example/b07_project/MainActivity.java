@@ -1,6 +1,7 @@
 package com.example.b07_project;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.b07_project.model.LoginModelImpl;
 import com.example.b07_project.presenter.LoginPresenter;
 import com.example.b07_project.view.LoginView;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements LoginView {
     private EditText editEmailText, passwordEditText;
@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements LoginView {
 
         btnSignIn = findViewById(R.id.btnSignIn);
         btnRegister = findViewById(R.id.btnRegister);
+        btnSignIn.setBackgroundColor(Color.parseColor("#007FA3"));
+        btnRegister.setBackgroundColor(Color.parseColor("#007FA3"));
 
         switchStatus = findViewById(R.id.switchStatus);
 
