@@ -38,54 +38,42 @@ public class RegisterPresenterTest {
 
     @Test
     public void testCreateAdminUserSuccess() {
-        // Arrange
         String validEmail = "valid@example.com";
         String validPassword = "password";
         boolean isAdmin = true;
 
-        // Simulate a successful admin registration
         doAnswer(invocation -> {
             // Simulate the OnAdminRegister callback
             ((RegisterModel.OnRegisterListener) invocation.getArgument(2)).OnAdminRegister(isAdmin);
             return null;
         }).when(mockModel).createUserAndPass(anyString(), anyString(), any(RegisterModel.OnRegisterListener.class));
 
-        // Act
         presenter.CreateUserAndPassword(validEmail, validPassword, isAdmin);
-
-        // Assert
         verify(mockView).ShowAdminRegisterSuccess(isAdmin);
     }
 
     @Test
     public void testCreateStudentUserSuccess() {
-        // Arrange
         String validEmail = "valid@example.com";
         String validPassword = "password";
         boolean isAdmin = false;
 
-        // Simulate a successful student registration
         doAnswer(invocation -> {
             // Simulate the OnStudentRegister callback
             ((RegisterModel.OnRegisterListener) invocation.getArgument(2)).OnStudentRegister();
             return null;
         }).when(mockModel).createUserAndPass(anyString(), anyString(), any(RegisterModel.OnRegisterListener.class));
 
-        // Act
         presenter.CreateUserAndPassword(validEmail, validPassword, isAdmin);
-
-        // Assert
         verify(mockView).ShowStudentRegisterSuccess();
     }
 
     @Test
     public void testCreateUserFailedRegister() {
-        // Arrange
         String invalidEmail = "invalid@example.com";
         String invalidPassword = "wrongpassword";
         boolean isAdmin = false;
 
-        // Simulate a failed registration
         doAnswer(invocation -> {
             // Simulate the OnFailedRegister callback
             ((RegisterModel.OnRegisterListener) invocation.getArgument(2)).OnFailedRegister();
@@ -93,8 +81,6 @@ public class RegisterPresenterTest {
         }).when(mockModel).createUserAndPass(anyString(), anyString(), any(RegisterModel.OnRegisterListener.class));
 
         presenter.CreateUserAndPassword(invalidEmail, invalidPassword, isAdmin);
-
-        // Assert
         verify(mockView).ShowRegisterFailed();
     }
 }
