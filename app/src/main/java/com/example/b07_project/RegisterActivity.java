@@ -62,7 +62,8 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void registerUser(String email, String password, boolean isAdmin) {
-        DatabaseReference userDataReference = FirebaseDatabase.getInstance().getReference("user_data");
+        DatabaseReference userDataReference = FirebaseDatabase.getInstance()
+                .getReference("user_data");
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -73,7 +74,8 @@ public class RegisterActivity extends AppCompatActivity {
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             if (user != null) {
                                 String userUID = user.getUid();
-                                userDataReference.child(userUID).setValue(isAdmin);
+                                userDataReference.child(userUID)
+                                        .child("admin").setValue(isAdmin);
                             }
                             Toast.makeText(RegisterActivity.this,
                                     "Registration successful", Toast.LENGTH_SHORT).show();
