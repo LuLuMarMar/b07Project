@@ -2,6 +2,7 @@ Helina
 Done
 - Created JUnit tests for LoginPresenter and RegisterPresenter using Mockito
 Planned
+- Update JUnit tests based on changes in MainActivity and HomeActivity
 - Prepare the final doc
 
 Anish
