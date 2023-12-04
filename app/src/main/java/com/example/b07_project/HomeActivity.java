@@ -39,7 +39,8 @@ public class HomeActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     // dataSnapshot represents the data at the "user_data" node
-                    boolean isAdmin = dataSnapshot.child(userUID).getValue(Boolean.class);
+                    boolean isAdmin = dataSnapshot.child(userUID).child("admin")
+                            .getValue(Boolean.class);
                     setupUI(isAdmin);
                 } else {
                     Log.d("Firebase", "User does not exist");
@@ -115,6 +116,10 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             });
         } else {
+            btnAddFeedback.setVisibility(View.GONE);
+            btnComplaints.setVisibility(View.GONE);
+            btnPostReq.setVisibility(View.GONE);
+            btnViewAnnouncements    .setVisibility(View.GONE);
             //View Feedback Button (For Events)
             btnViewFeedback.setOnClickListener(v -> {
                 // Open FeedbackActivity when the button is clicked
