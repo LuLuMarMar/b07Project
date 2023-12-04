@@ -30,6 +30,6 @@ public class LoginModelImpl implements LoginModel {
     }
 
     private boolean checkAdmin(String email) {
-        return email.contains("@admin_mail");
+        return email.contains("@adminmail");
     }
 }
