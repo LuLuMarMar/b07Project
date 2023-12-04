@@ -13,7 +13,7 @@ public class LoginPresenter {
         this.view = view;
     }
 
-    public void AuthenticateUser(String email, String password, boolean isAdmin) {
+    public void AuthenticateUser(String email, String password) {
         model.authenticateUser(email, password, new LoginModel.OnLoginFinishedListener() {
             @Override
             public void onLoginSuccess(boolean isAdmin) {view.showLoginSuccess(isAdmin);}

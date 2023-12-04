@@ -15,7 +15,7 @@ import com.example.b07_project.model.LoginModelImpl;
 import com.example.b07_project.presenter.LoginPresenter;
 import com.example.b07_project.view.LoginView;
 
-public class MainActivity extends AppCompatActivity implements LoginView {
+public class AdminActivity extends AppCompatActivity implements LoginView {
     private EditText editEmailText, passwordEditText;
     private Button btnSignIn, btnRegister;
     private Switch switchStatus;
@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements LoginView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_adminlogin);
 
         editEmailText = findViewById(R.id.editTextEmailAddress);
         passwordEditText = findViewById(R.id.editTextPassword);
@@ -36,26 +36,25 @@ public class MainActivity extends AppCompatActivity implements LoginView {
 
         switchStatus = findViewById(R.id.switchStatus);
 
-        presenter = new LoginPresenter(new LoginModelImpl(), this);
+        presenter = new LoginPresenter(new LoginModelImpl(),this);
 
         btnSignIn.setOnClickListener(v -> {
             String email = editEmailText.getText().toString();
             String pass = passwordEditText.getText().toString();
             presenter.AuthenticateUser(email, pass);
         });
-
-        switchStatus.setOnClickListener(new View.OnClickListener() {
+        btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AdminActivity.class);
+                Intent intent = new Intent(AdminActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
         });
 
-        btnRegister.setOnClickListener(new View.OnClickListener() {
+        switchStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                Intent intent = new Intent(AdminActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
@@ -70,9 +69,9 @@ public class MainActivity extends AppCompatActivity implements LoginView {
     //Inherited from LoginView
     @Override
     public void showLoginSuccess(boolean isAdmin) {
-        if (!isAdmin) {
-            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-            Toast.makeText(MainActivity.this, "Student login successful", Toast.LENGTH_SHORT).show();
+        if(isAdmin) {
+            Intent intent = new Intent(AdminActivity.this, HomeActivity.class);
+            Toast.makeText(AdminActivity.this, "Admin login successful", Toast.LENGTH_SHORT).show();
             //Send to HomeActivity
             startActivity(intent);
         }

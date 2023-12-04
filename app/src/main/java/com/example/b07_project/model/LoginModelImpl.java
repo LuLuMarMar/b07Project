@@ -17,7 +17,7 @@ public class LoginModelImpl implements LoginModel {
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(task -> {
-                        if (task.isSuccessful() && (email != null) && (password != null)) {
+                        if (task.isSuccessful()) {
                             FirebaseUser user = task.getResult().getUser();
                             boolean isAdmin = checkAdmin(user.getUid());
                             listener.onLoginSuccess(isAdmin);
