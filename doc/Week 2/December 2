@@ -14,4 +14,5 @@ Helina
 Done
 - Started working on the final document
 Planned
+- Learn how to use Mockito for JUnit tests
 - Complete writing JUnit tests for the login module
