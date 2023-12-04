@@ -37,43 +37,33 @@ public class LoginPresenterTest {
 
     @Test
     public void testAuthenticateUserSuccess() {
-        // Arrange
         String validEmail = "valid@example.com";
         String validPassword = "password";
         boolean isAdmin = false;
 
-        // Simulate a successful login
         doAnswer((Answer<Void>) invocation -> {
             // Simulate the onLoginSuccess callback
             ((LoginModel.OnLoginFinishedListener) invocation.getArgument(2)).onLoginSuccess(isAdmin);
             return null;
         }).when(mockModel).authenticateUser(any(String.class), any(String.class), any(LoginModel.OnLoginFinishedListener.class));
 
-        // Act
         presenter.AuthenticateUser(validEmail, validPassword, isAdmin);
-
-        // Assert
         verify(mockView).showLoginSuccess(isAdmin);
     }
 
     @Test
     public void testAuthenticateUserError() {
-        // Arrange
         String invalidEmail = "invalid@example.com";
         String invalidPassword = "wrongpassword";
         boolean isAdmin = true;
 
-        // Simulate a login error
         doAnswer((Answer<Void>) invocation -> {
             // Simulate the onLoginError callback
             ((LoginModel.OnLoginFinishedListener) invocation.getArgument(2)).onLoginError();
             return null;
         }).when(mockModel).authenticateUser(any(String.class), any(String.class), any(LoginModel.OnLoginFinishedListener.class));
 
-        // Act
         presenter.AuthenticateUser(invalidEmail, invalidPassword, isAdmin);
-
-        // Assert
         verify(mockView).showLoginError();
     }
 }
