@@ -1,16 +1,23 @@
-package com.example.b07_project.view;
+package com.example.b07_project;
 
 public class AnnouncementModel {
-    private String announcement;
+    private String title;
+    private String content;
 
-    public AnnouncementModel() {
+    public AnnouncementModel(String title, String content) {
+        this.title = title;
+        this.content = content;
     }
 
-    public String getAnnouncement() {
-        return announcement;
+    public String getTitle() {
+        return title;
     }
 
-    public void setAnnouncement(String announcement) {
-        this.announcement = announcement;
+    public String getContent() {
+        return content;
+    }
+
+    public void setAnnouncement(String content) {
+        this.content = content;
     }
 }
