@@ -1,0 +1,201 @@
+﻿CSCB07 Final Project - Group 20 - Contributions Document
+Anish: 
+* User Story 2:
+   * Implemented UI for accepting user input for course grades, selecting level, and indicating completed credits.
+   * Utilized Radio Buttons for selecting options and stored selections in variables.
+   * Utilized user-inputted information along with java logic to determine if user qualifies for POSt or not and ensured all cases were covered
+   * Validated form input and displayed error messages if user input did not match requirements.
+   * Calculated and displayed qualification status based on entered data as a pop-up message.
+
+
+* User Story 8:
+   * Setup DatabaseReference for "feedback" in Firebase.
+   * Initialized and populated ListView with feedback data.
+   * Implemented Spinner for event selection.
+   * Dynamically updated Spinner with feedback from the database automatically as it was added.
+   * Categorized feedback by event name to allow admins to see individual feedback for each event.
+   * Calculated and displayed total review count and average rating for each event that has related feedback.
+   * Designed a responsive UI with a combination of LinearLayout, RelativeLayout, and TextView elements
+
+
+* User Story 9:
+   * Implemented a form-like UI for obtaining event information using EditText, DatePicker, and Button.
+   * Setup DatabaseReference for "events" in Firebase.
+   * Used the database to update all event details in realtime 
+   * Validated form input and displayed error messages if user input did not match requirements
+   * Created a helper class to represent event data with all necessary fields
+
+
+* General:
+   * Implemented listview and header frame that was used across many features and user stories.
+   * Developed the UI for the home page that incorporates buttons that lead to various different features.
+   * Developed the back button code that leads users back to the home page from each feature
+
+
+
+
+Helina: 
+* User Story 7:
+   * Created and developed PostAnnouncementActivity.java and  AnnouncementListActivity.java file to implement the Announcement feature
+   * Created methods for users to add Announcements to the database, and simultaneously view what they just added (PostAnnouncementActivity)
+   * Setup DatabaseReference for "announcements" in Firebase
+   * Created an additional AnnouncementListActivity.java page to view all the posted announcements in realtime database
+   * Designed reactive UI (activity_announcemnts_post.xml & (activity_announcemnts_list.xml) with a combination of ConstraintLayout, ListView, and TextView elements
+
+
+* User Story 10:
+   * Created and developed ReviewComplaintActivity.java file to implement the view complaint feature of admin
+   * Created methods that allowed reference to Firebase, allowing users to view real-time complaints 
+   * Utilized FirebaseListAdapter in Firebase UI to initialize and populate ListView
+   * Designed reactive UI for ReceiveComplaintsActivity with a combination of ConstraintLayout, ListView, and TextView elements
+* General:
+   * Created and implemented JUnit tests to validate LoginPresenter
+   * Used Mockito to simulate the interactions with the model and the view
+   * Achieved 100% line coverage for the Presenter Module
+   * Merged User Story 7 and 10 to the Home Page, adjusting the layout and buttons to adhere to the Restrained Layout
+
+
+RJ:
+User Story #5
+* Created a ListView for events
+* Read event data from database using ValueEventListener and DataSnapshot
+* Added an AlertDialog pop-up when an ListView event is clicked
+* Created a user-friendly AlertDialog with dedicated RSVP, Add Feedback and exit buttons
+* Prevented non-RSVP’d students to add feedback
+* Added the feature for users to cancel their RSVP
+* Created a feature to prevent user from RSVP to an event with 0 remaining seats
+* Displays appropriate toast message
+* Used clock and exit symbol in AlertDialog for date of event and exit to increase UX
+* Added the feature where the background around the AlertDialog would dim when it appears and disappear when the AlertDialog disappears
+* Prevent the user from clicking background buttons and ListView when an AlertDialog is present to prevent pop-up of layered AlertDialog
+* Stored the events the user RSVP’d for in the database under the node “user_data” where the first child are the user UID and the second child are the keys of the events with true values
+   * Ensures that user retain their RSVPs
+* Removed event data from database if the user cancel their RSVP
+   * Displays appropriate toast message
+* IMPORTANT: There is a bug where if the user accept and cancel their RSVP multiple times without closing the AlertDialog between actions, the remaining space will either go up or down more than expected
+   * Also, the remaining space do not change synchronously when the RSVP button is clicked
+
+
+User Story #6
+* Added the feature where the feedback for a specific event wouldn’t require the user to input the name of the event, increasing UX
+* Created a user-friendly UI using RadioButtons and TextInputLayout
+* Limited the TextInputLayout length to prevent it from going off screen
+* Made the numbers in RadioButtons “pop” by adding a shadow behind the text
+* Oriented the RadioButtons horizontally
+* Oriented the text of the RadioButtons vertically
+* Changed the color of the text for the RadioButton to make it easier for the user to discern which is a positive or negative rating
+* Added a “greeting” text above the ratings that includes the event name to help the user ensure they are writing the feedback for the correct event
+* Created a Feedback object consisting of name of event, rating of event, and feedback of event
+* Stored feedback data in database under node “feedback” with the first child being a unique key for a single feedback and the child of that being the fields of the Feedback class
+* Added an exit button at the top-right of the UI in case the user change their mind
+
+
+User Story #1
+
+
+MainActivity:
+* Reformat the layout of login by deleting the admin switch, changing the color of the buttons and adding a header
+* Checks if the EditText box for email and password are empty with appropriate toast message
+* Checks if the user is authenticated by checking the Authentication database in Firebase
+   * If not appropriate message is displayed using toast
+   * If user credentials are valid, it sends them to HomeActivity
+
+
+RegisterActivity:
+* Check whether Password and Confirm Password are the same and display appropriate message if not
+* Authenticate the email and password when register button is clicked
+* Additional information is stored in realtime database under child(“user_data”).child(userUID).child(“admin”) with values true if the admin switch is on and false if not
+
+
+HomeActivity:
+* Gets the admin state of the user in the database
+* If the user is admin, only admin functionalities will appear and the other buttons would be invisible
+   * Same if the user is a student
+* Added sign out button that signs out the user and return to MainActivity
+
+
+Dushaan:
+* User Story 3:
+   * Created and developed ComplaintActivity.java file to implement the Complaint feature
+   * Setup DatabaseReference for "complaints" in Firebase which is necessary for recovery of information for other Admin features
+   * Created methods for the user to add Complaints and simultaneously View what they have added
+   * Designed a responsive UI (activity_complaint.xml) with a combination of LinearLayout, ListView, and TextView elements
+* User Story 4:
+   * Created and developed NotificationHelper, NotificationItem and NotificationsActivity class to implement this feature
+   * Notification Helper class is used to create methods to show notifications when an event or announcement is made
+      * The respective method is then called up in the Announcement class and Event Class, so that when the user creates them, the notification is also triggered in real-time
+      * This class also stores the Notifications in a list in order to be retrieved for use in the Notification UI
+   * Notification Item Class is used to create constructor to retain values of a notification which is then stored in a list in Notification Helper class
+   * Notification Activity class is used to implement the Notification UI as it is configured to display the retained notification values in a list view for the user to see incase they have missed a notification
+   * Designed a responsive UI (activity_notifications.xml) in order to allow user to also have another feature to reference back to missed notifications
+* General:
+   * Sanity of all features and full app in order to test for potential errors that the user can experience (manual testing)
+* Scrum Master Duties:
+   * Scheduled Daily Standup meetings where team members would provide updates on what they were able to complete the day before, along with what they have planned to finish for the day
+   * Had group members update documents on our repo for everyday in order to keep record of what was done and planned for each day
+      * REFER to DOC folder in repo for daily standup records of all team members
+   * Created a JIRA Project board and added all User Stories and subtasks to the backlog
+   * Updated JIRA board when needed as sprints were planned, subtasks were needed and user stories were closed
+   * Had sprint meetings every Wednesdays in order to maximize efficiency within the group where pros and cons of the previous sprint were discussed and planning for the following sprint was done
+      * Sprint Meeting Nov 15 Notes:
+         * Comments from previous Sprint: 
+            * N/A (as this was our first Sprint)
+         * Planning:
+            * Planned out who is going to take on which User Story
+            * Communication: Discord
+            * Potential blockers for each User Story (as some were correlated with the one story being the user version and one story being the admin version for the same feature - databases correlated)
+            * Moving respective stories for the week to the next sprint board and adding story points
+      * Sprint Meeting Nov 22 Notes:
+         * Comments from previous Sprint: 
+            * What was good:
+               * We got started!
+               * Learned key things needed for each of our stories
+                  * I.e. Firebase, UI implementations needed
+               * UI started for some stories
+               * All of us reviewed relevant material for android development and asked questions
+               * Consistently everyone has been updating the doc folder with their daily comments and are attending daily standups with punctuality
+            * What can be improved:
+               * More time put in to the stories
+               * Lot of blockers were mid terms and coursework from other courses
+               * Prioirtizing more work to be done for the project
+         * Planning:
+            * Planned out finishing implementation off all stories for the next sprint, along with each team member performing smoke testing on each of their stories
+            * Any correlating tasks, team members are advised to speak with eachother and remove any potential blockers
+      * Sprint Meeting Nov 29 Notes:
+         * Comments from previous Sprint: 
+            * What was good:
+               * Our goal was achieved and we were able to complete implementation for the most part
+               * Blockers were all successfully got through (databases were implemented successfully)
+            * What can be improved:
+               * Some pushes into the repo caused issues so we should follow our rules carefully and make sure someone reviews PRs before merging
+         * Planning:
+            * Final check of all your stories and the entire app as a whole
+            * Make UI look as best as possible
+            * Any final functionalitiers that want to be added can be added
+            * Finish your comments for the final doc file that needs to be submitted
+
+
+Lucas: 
+* Files contributed: LoginModel/Presenter/View, 
+* Files Modified: MainActivity, HomePageActivity. RegisterActivity
+* User Story 1: 
+   * Fully incharge of the Login-module and Register-module used to process accounts and display the correct pages according to each type of account (Admin and Student) 
+   * Received assistance in debugging process from group members during final sprint
+   * Logic for processing Student and Admin status is in the HomePageActivity in which a boolean value tracks
+   * Setup Firebase Authentication service for email and password
+      * Functions used for business logic include: signInWithUserAndPassword and CreateUserWithEmailAndPassword
+   * Initial Implementation made use of the MainActivity for processing all Login logic. 
+      * Reworked the page to adhere to MVP architecture, the general flow of the input stream goes like: 
+         * MainActivity -> LoginPresenter -> LoginModelImpl (implements LoginModel) -> LoginView -> back to MainActivity
+   * Setup the outline for the HomePage UI and 
+      * Logic for UI obscuring data based on the condition of Admin Status.
+      * Admin Status is granted to users who click the Admin switch in the RegisterActivity
+   * Overall, the Login Register Modules should let the user create admin and student accounts to access admin/student exclusive services by logging in. From the Home page you should be able to sign out and be able to repeat the process. 
+* General: 
+   * Contributed all work towards BProject-1 Branch
+   * Attended nearly every meeting with the exception of 1 absence, provided my contributions and ideas to the group for each meeting
+* Notes: 
+   * Firebase may take some processing time between account registration and account login, so users may have to wait a couple of seconds before logging in with a newly registered account. 
+
+
+*There is a README file in the Github repo*

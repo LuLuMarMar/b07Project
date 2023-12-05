@@ -44,6 +44,8 @@ public class FeedbackActivity extends AppCompatActivity {
         setupEventSpinner();
 
         setupBackButton();
+
+
     }
 
     private void initializeViews() {
