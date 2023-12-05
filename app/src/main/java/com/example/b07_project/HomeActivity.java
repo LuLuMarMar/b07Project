@@ -24,7 +24,8 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_main);
 
-        DatabaseReference userReference = FirebaseDatabase.getInstance().getReference().child("user_data");
+        DatabaseReference userReference = FirebaseDatabase.getInstance()
+                .getReference().child("user_data");
         FirebaseUser user;
         String email;
 
@@ -112,7 +113,8 @@ public class HomeActivity extends AppCompatActivity {
             //Add Receive Notifications/Announcements
             btnViewAnnouncements.setOnClickListener(v -> {
                 // Open FeedbackActivity when the button is clicked
-                Intent intent = new Intent(HomeActivity.this, NotificationsActivity.class);
+                Intent intent = new Intent(HomeActivity.this,
+                        NotificationsActivity.class);
                 startActivity(intent);
             });
         } else {
@@ -129,13 +131,15 @@ public class HomeActivity extends AppCompatActivity {
 
             //View Complaints Button
             switchComplaintsButton.setOnClickListener(v -> {
-                Intent intent = new Intent(HomeActivity.this, ReceiveComplaintActivity.class);
+                Intent intent = new Intent(HomeActivity.this,
+                        ReceiveComplaintActivity.class);
                 startActivity(intent);
             });
 
             //Post Announcements Button
             switchAnnouncementsButton.setOnClickListener(v -> {
-                Intent intent = new Intent(HomeActivity.this, PostAnnouncementsActivity.class);
+                Intent intent = new Intent(HomeActivity.this,
+                        PostAnnouncementsActivity.class);
                 startActivity(intent);
             });
 
@@ -148,4 +152,3 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 }
-
