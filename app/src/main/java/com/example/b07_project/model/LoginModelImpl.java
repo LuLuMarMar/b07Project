@@ -1,35 +1,32 @@
 package com.example.b07_project.model;
 
 
+import android.content.Intent;
 import android.text.TextUtils;
+import android.widget.Toast;
 
+import com.example.b07_project.HomeActivity;
+import com.example.b07_project.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-/*
-    Performs actual authentication service using firebase
-    CheckAdmin handles Admin Logic
- */
-
 public class LoginModelImpl implements LoginModel {
     @Override
-    public void authenticateUser(String email, String password, OnLoginFinishedListener listener) {
-        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
-            FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+    public void authenticateUser(String email, String pass, OnLoginFinishedListener listener) {
+        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(pass)) {
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(email, pass)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            FirebaseUser user = task.getResult().getUser();
-                            boolean isAdmin = checkAdmin(user.getUid());
-                            listener.onLoginSuccess(isAdmin);
+                            // Authentication successful
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            if (user != null) {
+                                listener.onLoginSuccess();
+                            }
                         } else {
-                            //                        String errorMessage = task.getException().getMessage();
+                            // If sign in fails, display a message to the user.
                             listener.onLoginError();
                         }
                     });
         }
-    }
-
-    private boolean checkAdmin(String email) {
-        return email.contains("@adminmail");
     }
 }

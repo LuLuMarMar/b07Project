@@ -1,6 +1,7 @@
 package com.example.b07_project.view;
 
 public interface LoginView {
-    public void showLoginSuccess(boolean isAdmin);
-    public void showLoginError();
+    public void showLoginSuccess();
+    public void showLoginError(String email, String pass);
 }
+

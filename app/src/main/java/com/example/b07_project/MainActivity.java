@@ -11,14 +11,18 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.b07_project.model.LoginModelImpl;
+import com.example.b07_project.presenter.LoginPresenter;
+import com.example.b07_project.view.LoginView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LoginView {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private EditText editEmailText, passwordEditText;
     private Button btnSignIn, btnRegister;
+    private LoginPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
         btnSignIn.setBackgroundColor(Color.parseColor("#007FA3"));
         btnRegister.setBackgroundColor(Color.parseColor("#007FA3"));
 
-        //I don't know if this is really needed
+        presenter = new LoginPresenter(new LoginModelImpl(), this);
+
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -43,9 +48,11 @@ public class MainActivity extends AppCompatActivity {
         };
 
         btnSignIn.setOnClickListener(v -> {
-            String email = editEmailText.getText().toString();
             String pass = passwordEditText.getText().toString();
+            String email = editEmailText.getText().toString();
+            presenter.AuthenticateUser(email, pass);
 
+            /*
             if (!email.equals("") && !pass.equals("")) {
                 mAuth.signInWithEmailAndPassword(email, pass)
                         .addOnCompleteListener(this, task -> {
@@ -70,6 +77,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+             */
+        });
+
         btnRegister.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
             startActivity(intent);
@@ -89,4 +99,22 @@ public class MainActivity extends AppCompatActivity {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
+
+    @Override
+    public void showLoginSuccess(){
+        Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(MainActivity.this,HomeActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void showLoginError(String email, String pass){
+        if(!email.equals("") && !pass.equals("") ){
+            Toast.makeText(MainActivity.this, "Authentication failed. Incorrect credentials.",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(MainActivity.this, "Please fill out all the fields.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }
