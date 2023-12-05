@@ -38,7 +38,6 @@ public class PostAnnouncementsActivity extends AppCompatActivity {
 
         // Back button to return to MainActivity
         Button btnBack = findViewById(R.id.PostbackToMainButton);
-        btnBack.setBackgroundColor(Color.BLUE);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
