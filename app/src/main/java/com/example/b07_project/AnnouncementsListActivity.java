@@ -3,59 +3,60 @@ package com.example.b07_project;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.b07_project.PostAnnouncementsActivity;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DatabaseReference;
-
-import java.util.ArrayList;
+import com.google.firebase.database.FirebaseDatabase;
+import com.firebase.ui.database.FirebaseListOptions;
+import com.firebase.ui.database.FirebaseListAdapter;
 
 public class AnnouncementsListActivity extends AppCompatActivity {
 
-    private ListView announcementsListView;
-    private ArrayList<String> announcementsList;
-    private ArrayAdapter<String> announcementsAdapter;
-    DatabaseReference announcementsReference = FirebaseDatabase.getInstance().getReference().child("announcement");
+    private FirebaseListAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_announcements_list);
 
-        announcementsListView = findViewById(R.id.announcementsListView);
         Button backToPostButton = findViewById(R.id.backToPostButton);
+        DatabaseReference announcementsReference = FirebaseDatabase.getInstance().getReference().child("announcement");
 
-        announcementsList = new ArrayList<>();
-        announcementsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, announcementsList);
-        announcementsListView.setAdapter(announcementsAdapter);
+        ListView announcementsListView = findViewById(R.id.announcementsListView);
 
-        backToPostButton.setOnClickListener(new View.OnClickListener() {
+        FirebaseListOptions<String> options = new FirebaseListOptions.Builder<String>()
+                .setLayout(android.R.layout.simple_list_item_1)
+                .setQuery(announcementsReference, String.class)
+                .build();
+
+        adapter = new FirebaseListAdapter<String>(options) {
             @Override
-            public void onClick(View v) {
-                backToPostAnnouncement();
+            protected void populateView(@NonNull View v, @NonNull String model, int position) {
+                TextView textView = v.findViewById(android.R.id.text1);
+                textView.setText(model);
             }
-        });
+        };
 
-        // Receive posted announcement
-        Intent intent = getIntent();
-        if (intent != null) {
-            String announcement = intent.getStringExtra("announcement");
+        announcementsListView.setAdapter(adapter);
 
-            updateAnnouncementsList(announcement);
-        }
+        backToPostButton.setOnClickListener(v -> backToPostAnnouncement());
     }
 
-    public void updateAnnouncementsList(String announcement) {
-        // Ensure announcementsList is not null
-        if (announcementsList != null) {
-            announcementsList.add(announcement);
-            announcementsAdapter.notifyDataSetChanged();
-        }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 
     public void backToPostAnnouncement() {

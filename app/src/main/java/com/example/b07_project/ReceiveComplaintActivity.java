@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DatabaseReference;
@@ -14,7 +15,6 @@ import com.firebase.ui.database.FirebaseListOptions;
 import com.firebase.ui.database.FirebaseListAdapter;
 
 public class ReceiveComplaintActivity extends AppCompatActivity {
-    private DatabaseReference complaintsReference;
     private FirebaseListAdapter<ComplaintModel> adapter;
 
     @Override
@@ -23,7 +23,7 @@ public class ReceiveComplaintActivity extends AppCompatActivity {
         setContentView(R.layout.activity_receive_complaint);
 
         Button backToMainButton = findViewById(R.id.backToPostButton);
-        complaintsReference = FirebaseDatabase.getInstance().getReference().child("complaints");
+        DatabaseReference complaintsReference = FirebaseDatabase.getInstance().getReference().child("complaints");
 
         ListView complaintsListView = findViewById(R.id.complaintsListView);
 
@@ -34,7 +34,7 @@ public class ReceiveComplaintActivity extends AppCompatActivity {
 
         adapter = new FirebaseListAdapter<ComplaintModel>(options) {
             @Override
-            protected void populateView(View v, ComplaintModel model, int position) {
+            protected void populateView(@NonNull View v, @NonNull ComplaintModel model, int position) {
                 TextView textView = v.findViewById(android.R.id.text1);
                 textView.setText(model.getComment());
             }
@@ -42,25 +42,18 @@ public class ReceiveComplaintActivity extends AppCompatActivity {
 
         complaintsListView.setAdapter(adapter);
 
-        backToMainButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                backToMain();
-            }
-        });
+        backToMainButton.setOnClickListener(v -> backToMain());
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        // Start listening for changes when the activity is in the foreground
         adapter.startListening();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        // Stop listening for changes when the activity is in the background
         adapter.stopListening();
     }
 

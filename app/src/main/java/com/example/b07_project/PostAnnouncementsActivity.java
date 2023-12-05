@@ -1,8 +1,8 @@
 package com.example.b07_project;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,10 +16,8 @@ import com.google.firebase.database.FirebaseDatabase;
 public class PostAnnouncementsActivity extends AppCompatActivity {
 
     private EditText announcementEditText;
-    private Button postButton;
     private TextView announcementTextView;
     private DatabaseReference databaseReference;
-    private Button postbackToMainButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,22 +25,12 @@ public class PostAnnouncementsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_announcements_post);
 
         announcementEditText = findViewById(R.id.announcementEditText);
-        postButton = findViewById(R.id.postButton);
         announcementTextView = findViewById(R.id.announcementTextView);
-        postbackToMainButton = findViewById(R.id.PostbackToMainButton);
-        postButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                postAnnouncement();
-            }
-        });
+        Button postButton = findViewById(R.id.postButton);
+        Button postbackToMainButton = findViewById(R.id.PostbackToMainButton);
 
-        postbackToMainButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                backToMain();
-            }
-        });
+        postButton.setOnClickListener(view -> postAnnouncement());
+        postbackToMainButton.setOnClickListener(v -> backToMain());
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("announcement");
@@ -62,21 +50,21 @@ public class PostAnnouncementsActivity extends AppCompatActivity {
         startActivity(intent);
 
         // Upload the new announcement to Firebase
-        String key = databaseReference.push().getKey(); // Generate a unique key for the announcement
-        databaseReference.child(key).setValue(newAnnouncement);
+        String key = databaseReference.push().getKey();
+        if (key != null) {
+            databaseReference.child(key).setValue(newAnnouncement);
+        } else {
+            // Handle the case where key is null
+            Log.e("AnnouncementActivity", "Failed to generate a key for the announcement");
+        }
 
         // Show a notification for the new announcement
         NotificationHelper.showAnnouncementNotification(this, "New Announcement", newAnnouncement);
-
 
         // Clear the EditText
         announcementEditText.setText("");
     }
 
-    // Add onClick attribute in XML for the post button to call this method
-    public void onPostButtonClick(View view) {
-        postAnnouncement();
-    }
     public void switchToAnnouncementsList(View view) {
         Intent intent = new Intent(this, AnnouncementsListActivity.class);
         startActivity(intent);
