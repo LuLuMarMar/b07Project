@@ -1,64 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/relativeLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
 
     <!-- Button to go to the form -->
+    <Button
+        android:id="@+id/btnGoToForm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Schedule Event"/>
+
+    <Button
+        android:id="@+id/btnViewFeedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnGoToForm"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="View Feedback"/>
 
     <Button
         android:id="@+id/btnComplaints"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="192dp"
+        android:layout_below="@id/btnViewFeedback"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
         android:onClick="navigateToComplaints"
-        android:text="Submit Complaints"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Submit Complaints" />
 
     <Button
         android:id="@+id/btnViewEvents"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/btnComplaints"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:text="View Events"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnComplaints" />
+        android:text="View Events"/>
 
+    <Button
+        android:id="@+id/btnViewComplaints"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/btnViewEvents"
+        android:layout_marginTop="16dp"
+        android:onClick="switchToComplaintsUI"
+        android:text="View Complaints" />
+
+    <Button
+        android:id="@+id/btnPostAnnouncements"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/btnViewComplaints"
+        android:layout_marginTop="16dp"
+        android:onClick="switchToAnnouncementUI"
+        android:text="Post Announcements" />
     <Button
         android:id="@+id/btnPostReq"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/btnPostAnnouncements"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:text="POSt Requirements"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnViewEvents" />
+        android:text="POSt Requirements"/>
 
     <Button
         android:id="@+id/btnNotifications"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/btnPostReq"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:text="Notifications"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnPostReq" />
+        android:text="Notifications"/>
 
     <Button
         android:id="@+id/btnSignOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="20dp"
-        android:text="Sign Out "
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:text="Sign Out " />
+</RelativeLayout>

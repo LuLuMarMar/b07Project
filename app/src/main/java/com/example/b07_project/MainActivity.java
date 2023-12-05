@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity implements LoginView {
-    private FirebaseAuth mAuth;
+    public FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private EditText editEmailText, passwordEditText;
     private Button btnSignIn, btnRegister;
@@ -51,33 +51,6 @@ public class MainActivity extends AppCompatActivity implements LoginView {
             String pass = passwordEditText.getText().toString();
             String email = editEmailText.getText().toString();
             presenter.AuthenticateUser(email, pass);
-
-            /*
-            if (!email.equals("") && !pass.equals("")) {
-                mAuth.signInWithEmailAndPassword(email, pass)
-                        .addOnCompleteListener(this, task -> {
-                            if (task.isSuccessful()) {
-                                // Authentication successful
-                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                                if (user != null) {
-                                    Intent intent = new Intent(MainActivity.this,
-                                            HomeActivity.class);
-                                    startActivity(intent);
-                                }
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Toast.makeText(MainActivity.this,
-                                        "Authentication failed. Incorrect credentials.",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        });
-            } else {
-                Toast.makeText(MainActivity.this,
-                        "Please fill out all the fields.", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-             */
         });
 
         btnRegister.setOnClickListener(v -> {
@@ -102,7 +75,8 @@ public class MainActivity extends AppCompatActivity implements LoginView {
 
     @Override
     public void showLoginSuccess(){
-        Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, "Login Successful",
+                Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(MainActivity.this,HomeActivity.class);
         startActivity(intent);
     }
@@ -110,10 +84,12 @@ public class MainActivity extends AppCompatActivity implements LoginView {
     @Override
     public void showLoginError(String email, String pass){
         if(!email.equals("") && !pass.equals("") ){
-            Toast.makeText(MainActivity.this, "Authentication failed. Incorrect credentials.",
+            Toast.makeText(MainActivity.this,
+                    "Authentication failed. Incorrect credentials.",
                     Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(MainActivity.this, "Please fill out all the fields.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this,
+                    "Please fill out all the fields.", Toast.LENGTH_SHORT).show();
         }
     }
 
