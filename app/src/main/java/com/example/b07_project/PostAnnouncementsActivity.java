@@ -82,7 +82,6 @@ public class PostAnnouncementsActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void backToMain() {
-        Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
+        finish();
     }
 }
