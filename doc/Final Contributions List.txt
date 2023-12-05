@@ -42,12 +42,12 @@ Helina:
    * Created an additional AnnouncementListActivity.java page to view all the posted announcements in realtime database
    * Designed reactive UI (activity_announcemnts_post.xml & (activity_announcemnts_list.xml) with a combination of ConstraintLayout, ListView, and TextView elements
 
-
 * User Story 10:
    * Created and developed ReviewComplaintActivity.java file to implement the view complaint feature of admin
    * Created methods that allowed reference to Firebase, allowing users to view real-time complaints 
    * Utilized FirebaseListAdapter in Firebase UI to initialize and populate ListView
    * Designed reactive UI for ReceiveComplaintsActivity with a combination of ConstraintLayout, ListView, and TextView elements
+
 * General:
    * Created and implemented JUnit tests to validate LoginPresenter
    * Used Mockito to simulate the interactions with the model and the view
