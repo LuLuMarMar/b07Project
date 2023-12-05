@@ -3,13 +3,20 @@ package com.example.b07_project;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class HomeActivity extends AppCompatActivity {
     @Override
@@ -17,15 +24,46 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_main);
 
+        DatabaseReference userReference = FirebaseDatabase.getInstance().getReference().child("user_data");
         FirebaseUser user;
         String email;
 
         user = FirebaseAuth.getInstance().getCurrentUser();
+        String userUID = user.getUid();
         assert user != null;
         email = user.getEmail();
         assert email != null;
-        boolean isAdmin = email.contains("@admin_mail");
 
+        userReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // dataSnapshot represents the data at the "user_data" node
+                    boolean isAdmin = dataSnapshot.child(userUID).child("admin")
+                            .getValue(Boolean.class);
+                    setupUI(isAdmin);
+                } else {
+                    Log.d("Firebase", "User does not exist");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("Firebase", "Error reading data: " + databaseError.getMessage());
+            }
+        });
+
+        //Sign Out Button
+        Button btnSignOut = findViewById(R.id.btnSignOut);
+        btnSignOut.setBackgroundColor(Color.parseColor("#007FA3"));
+        btnSignOut.setOnClickListener(v -> {
+            //Sign out the user and go back to the login page
+            FirebaseAuth.getInstance().signOut();
+            finish();
+        });
+    }
+
+    private void setupUI(boolean isAdmin) {
         //Connecting buttons from layout and changing colors
         Button btnAddFeedback = findViewById(R.id.btnViewEvents);
         btnAddFeedback.setBackgroundColor(Color.parseColor("#007FA3"));
@@ -78,6 +116,10 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             });
         } else {
+            btnAddFeedback.setVisibility(View.GONE);
+            btnComplaints.setVisibility(View.GONE);
+            btnPostReq.setVisibility(View.GONE);
+            btnViewAnnouncements    .setVisibility(View.GONE);
             //View Feedback Button (For Events)
             btnViewFeedback.setOnClickListener(v -> {
                 // Open FeedbackActivity when the button is clicked
@@ -104,15 +146,6 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             });
         }
-
-        //Sign Out Button
-        Button btnSignOut = findViewById(R.id.btnSignOut);
-        btnSignOut.setBackgroundColor(Color.parseColor("#007FA3"));
-        btnSignOut.setOnClickListener(v -> {
-            //Sign out the user and go back to the login page
-            FirebaseAuth.getInstance().signOut();
-            finish();
-        });
     }
 }
 

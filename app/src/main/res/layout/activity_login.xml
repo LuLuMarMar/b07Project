@@ -47,17 +47,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
 
-    <Switch
-        android:id="@+id/switchStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="265dp"
-        android:fontFamily="@font/alata"
-        android:text="Admin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
-
     <EditText
         android:id="@+id/editTextTextPassword"
         android:layout_width="300dp"

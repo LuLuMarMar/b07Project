@@ -2,13 +2,9 @@ package com.example.b07_project;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.stubbing.Answer;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.verify;
@@ -19,14 +15,12 @@ import com.example.b07_project.presenter.LoginPresenter;
 import com.example.b07_project.view.LoginView;
 
 public class LoginPresenterTest {
-
     @Mock
     private LoginModelImpl mockModel;
 
     @Mock
     private LoginView mockView;
 
-    @InjectMocks
     private LoginPresenter presenter;
 
     @Before
@@ -39,30 +33,42 @@ public class LoginPresenterTest {
     public void testAuthenticateUserSuccess() {
         String validEmail = "valid@example.com";
         String validPassword = "password";
-        boolean isAdmin = false;
 
-        doAnswer((Answer<Void>) invocation -> {
+        doAnswer(invocation -> {
             // Simulate the onLoginSuccess callback
-            ((LoginModel.OnLoginFinishedListener) invocation.getArgument(2)).onLoginSuccess(isAdmin);
+            ((LoginModel.OnLoginFinishedListener) invocation.getArgument(2)).onLoginSuccess();
             return null;
         }).when(mockModel).authenticateUser(any(String.class), any(String.class), any(LoginModel.OnLoginFinishedListener.class));
 
-        presenter.AuthenticateUser(validEmail, validPassword, isAdmin);
-        verify(mockView).showLoginSuccess(isAdmin);
+        presenter.AuthenticateUser(validEmail, validPassword);
+        verify(mockView).showLoginSuccess();
     }
 
     @Test
-    public void testAuthenticateUserError() {
+    public void testAuthenticateUserErrorIncorrectCredentials() {
         String invalidEmail = "invalid@example.com";
-        String invalidPassword = "wrongpassword";
-        boolean isAdmin = true;
+        String invalidPassword = "invalidPassword";
 
-        doAnswer((Answer<Void>) invocation -> {
+        doAnswer(invocation -> {
             ((LoginModel.OnLoginFinishedListener) invocation.getArgument(2)).onLoginError();
             return null;
         }).when(mockModel).authenticateUser(any(String.class), any(String.class), any(LoginModel.OnLoginFinishedListener.class));
 
-        presenter.AuthenticateUser(invalidEmail, invalidPassword, isAdmin);
-        verify(mockView).showLoginError();
+        presenter.AuthenticateUser(invalidEmail, invalidPassword);
+        verify(mockView).showLoginError(invalidEmail, invalidPassword);
+    }
+
+    @Test
+    public void testAuthenticateUserErrorIncompleteFields() {
+        String emptyEmail = "";
+        String emptyPassword = "";
+
+        doAnswer(invocation -> {
+            ((LoginModel.OnLoginFinishedListener) invocation.getArgument(2)).onLoginError();
+            return null;
+        }).when(mockModel).authenticateUser(any(String.class), any(String.class), any(LoginModel.OnLoginFinishedListener.class));
+
+        presenter.AuthenticateUser(emptyEmail, emptyPassword);
+        verify(mockView).showLoginError(emptyEmail, emptyPassword);
     }
 }
