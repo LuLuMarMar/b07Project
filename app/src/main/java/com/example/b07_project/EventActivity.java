@@ -65,7 +65,7 @@ public class EventActivity extends AppCompatActivity {
         Button btnBack = findViewById(R.id.btnBack);
         btnBack.setBackgroundColor(Color.parseColor("#007FA3"));
         btnBack.setOnClickListener(v -> finish());
-        displayFeedback();
+        displayEvent();
         listViewEvent.setOnItemClickListener((parent, view, position, id) -> {
             if(isListClickable) {
                 getEvent(position, new EventCallback() {
@@ -98,7 +98,7 @@ public class EventActivity extends AppCompatActivity {
         });
     }
 
-    private void displayFeedback() {
+    private void displayEvent() {
         eventReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -216,7 +216,7 @@ public class EventActivity extends AppCompatActivity {
                             eventReference.child(eventSnapshot.getKey())
                                     .child("limit").setValue(limit + 1);
                             Toast.makeText(EventActivity.this,
-                                    "Denied Invitation", Toast.LENGTH_LONG).show();
+                                    "Cancelled Acceptance", Toast.LENGTH_LONG).show();
                             btnAddFB.setEnabled(false);
                             btnAddFB.setBackgroundColor(Color.parseColor("#8F9196"));
                             btnRSVP.setBackgroundColor(Color.parseColor("#F2F4F7"));
