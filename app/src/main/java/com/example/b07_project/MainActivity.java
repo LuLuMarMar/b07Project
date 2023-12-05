@@ -1,24 +1,27 @@
 package com.example.b07_project;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Switch;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.b07_project.model.LoginModelImpl;
 import com.example.b07_project.presenter.LoginPresenter;
 import com.example.b07_project.view.LoginView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity implements LoginView {
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
     private EditText editEmailText, passwordEditText;
     private Button btnSignIn, btnRegister;
-    private Switch switchStatus;
     private LoginPresenter presenter;
 
     @Override
@@ -26,50 +29,92 @@ public class MainActivity extends AppCompatActivity implements LoginView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        mAuth = FirebaseAuth.getInstance();
         editEmailText = findViewById(R.id.editTextTextEmailAddress);
         passwordEditText = findViewById(R.id.editTextTextPassword);
 
         btnSignIn = findViewById(R.id.btnSignIn);
         btnRegister = findViewById(R.id.btnRegister);
-
-        switchStatus = findViewById(R.id.switchStatus);
+        btnSignIn.setBackgroundColor(Color.parseColor("#007FA3"));
+        btnRegister.setBackgroundColor(Color.parseColor("#007FA3"));
 
         presenter = new LoginPresenter(new LoginModelImpl(), this);
 
-        btnSignIn.setOnClickListener(v -> {
-            String email = editEmailText.getText().toString();
-            String pass = passwordEditText.getText().toString();
-            boolean isAdmin = switchStatus.isChecked();
-            presenter.AuthenticateUser(email, pass, isAdmin);
-        });
-
-        btnRegister.setOnClickListener(new View.OnClickListener() {
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
-                startActivity(intent);
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+            }
+        };
+
+        btnSignIn.setOnClickListener(v -> {
+            String pass = passwordEditText.getText().toString();
+            String email = editEmailText.getText().toString();
+            presenter.AuthenticateUser(email, pass);
+
+            /*
+            if (!email.equals("") && !pass.equals("")) {
+                mAuth.signInWithEmailAndPassword(email, pass)
+                        .addOnCompleteListener(this, task -> {
+                            if (task.isSuccessful()) {
+                                // Authentication successful
+                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                if (user != null) {
+                                    Intent intent = new Intent(MainActivity.this,
+                                            HomeActivity.class);
+                                    startActivity(intent);
+                                }
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Toast.makeText(MainActivity.this,
+                                        "Authentication failed. Incorrect credentials.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            } else {
+                Toast.makeText(MainActivity.this,
+                        "Please fill out all the fields.", Toast.LENGTH_SHORT).show();
             }
         });
+
+             */
+        });
+
+        btnRegister.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+            startActivity(intent);
+        });
     }
 
-    //Inherited from LoginView
     @Override
-    public void showLoginError() {
-        Toast.makeText(this, "Login Failed, Please enter the correct credentials...", Toast.LENGTH_SHORT).show();
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
     }
 
-    //Inherited from LoginView
     @Override
-    public void showLoginSuccess(boolean isAdmin) {
-        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-        if (isAdmin) {
-            Toast.makeText(MainActivity.this, "Admin login successful", Toast.LENGTH_SHORT).show();
-            //Send to HomeActivity
-            startActivity(intent);
-        } else {
-            Toast.makeText(MainActivity.this, "Student login successful", Toast.LENGTH_SHORT).show();
-            //Send to HomeActivity
-            startActivity(intent);
+    public void onStop() {
+        super.onStop();
+        if(mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
         }
     }
+
+    @Override
+    public void showLoginSuccess(){
+        Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(MainActivity.this,HomeActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void showLoginError(String email, String pass){
+        if(!email.equals("") && !pass.equals("") ){
+            Toast.makeText(MainActivity.this, "Authentication failed. Incorrect credentials.",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(MainActivity.this, "Please fill out all the fields.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

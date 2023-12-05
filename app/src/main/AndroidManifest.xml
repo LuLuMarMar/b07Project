@@ -36,7 +36,6 @@
         <activity android:name=".PostreqActivity"/>
         <activity android:name=".NotificationsActivity"/>
         <activity android:name=".RegisterActivity"/>
-
     </application>
 
 </manifest>
