@@ -17,10 +17,10 @@
 
 
     <Button
-        android:id="@+id/backToPostButton"
+        android:id="@+id/backToMainButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="backToPostAnnouncement"
+        android:onClick="backToMain"
         android:text="Back to Main Page"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,11 +28,12 @@
 
     <TextView
         android:id="@+id/ComplaintBanner"
-        android:layout_width="match_parent"
-        android:layout_height="46dp"
+        android:layout_width="411dp"
+        android:layout_height="61dp"
         android:layout_gravity="center"
         android:background="#673AB7"
-        android:text="Complaints"
+        android:gravity="center"
+        android:text="View Complaints"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="24sp"
