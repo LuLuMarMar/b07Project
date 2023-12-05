@@ -121,7 +121,7 @@ public class HomeActivity extends AppCompatActivity {
             btnAddFeedback.setVisibility(View.GONE);
             btnComplaints.setVisibility(View.GONE);
             btnPostReq.setVisibility(View.GONE);
-            btnViewAnnouncements    .setVisibility(View.GONE);
+            btnViewAnnouncements.setVisibility(View.GONE);
             //View Feedback Button (For Events)
             btnViewFeedback.setOnClickListener(v -> {
                 // Open FeedbackActivity when the button is clicked

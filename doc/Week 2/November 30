@@ -21,3 +21,9 @@ Done
 - Added the ability to only add feedback when the user is RSVP'd
 Planned
 - Add more features like change the color of button to indicate is has been pressed for event RSVP and feedback
+
+Lucas:
+Done
+- Admin and Student Logic Implemented for Registration and Login
+Planned 
+- Add better UX for both modules and refactor to MVP
