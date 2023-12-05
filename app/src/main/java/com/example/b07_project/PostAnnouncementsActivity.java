@@ -1,6 +1,7 @@
 package com.example.b07_project;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,13 +28,25 @@ public class PostAnnouncementsActivity extends AppCompatActivity {
         announcementEditText = findViewById(R.id.announcementEditText);
         announcementTextView = findViewById(R.id.announcementTextView);
         Button postButton = findViewById(R.id.postButton);
-        Button postbackToMainButton = findViewById(R.id.PostbackToMainButton);
+        //Button postbackToMainButton = findViewById(R.id.PostbackToMainButton);
 
         postButton.setOnClickListener(view -> postAnnouncement());
-        postbackToMainButton.setOnClickListener(v -> backToMain());
+       // postbackToMainButton.setOnClickListener(v -> backToMain());
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("announcement");
+
+        // Back button to return to MainActivity
+        Button btnBack = findViewById(R.id.PostbackToMainButton);
+        btnBack.setBackgroundColor(Color.BLUE);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Finish the current activity and go back to the main page
+                finish();
+                finish();
+            }
+        });
     }
 
     private void postAnnouncement() {

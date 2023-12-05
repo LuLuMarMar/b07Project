@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/announcementsListView"
         android:onClick="backToPostAnnouncement"
-        android:text="Back to Post Announcement"
+        android:text="Back to Home Page"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

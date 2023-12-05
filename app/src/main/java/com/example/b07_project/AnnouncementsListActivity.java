@@ -1,6 +1,7 @@
 package com.example.b07_project;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -44,7 +45,18 @@ public class AnnouncementsListActivity extends AppCompatActivity {
 
         announcementsListView.setAdapter(adapter);
 
-        backToPostButton.setOnClickListener(v -> backToPostAnnouncement());
+        //backToPostButton.setOnClickListener(v -> backToPostAnnouncement());
+
+        // Back button to return to MainActivity
+        Button btnBack = findViewById(R.id.backToPostButton);
+        btnBack.setBackgroundColor(Color.BLUE);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Finish the current activity and go back to the main page
+                finish();
+            }
+        });
     }
 
     @Override
