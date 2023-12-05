@@ -65,7 +65,6 @@ public class ReceiveComplaintActivity extends AppCompatActivity {
     }
 
     public void backToMain() {
-        Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
+        finish();
     }
 }
